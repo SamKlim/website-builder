@@ -5,7 +5,7 @@
 html,
 body,
 * {
-  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, ui-sans-serif, 'Segoe UI', 'Roboto', sans-serif;
 }
 
 @keyframes marquee {
@@ -269,6 +269,10 @@ body,
   pointer-events: none;
 }
 
+.insight-heading {
+  font-family: 'New York', 'Iowan Old Style', 'Apple Garamond', Georgia, serif;
+}
+
 .insight-nav-glass {
   background: rgba(248, 246, 244, 0.55);
   backdrop-filter: blur(20px) saturate(1.5);
@@ -301,4 +305,19 @@ body,
   animation:
     hero-face-in 700ms ease-out both,
     hero-face-float 5s ease-in-out infinite;
+}
+
+@keyframes service-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-panel-animate {
+  animation: service-panel-in 320ms ease-out both;
 }

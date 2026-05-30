@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Mail, MapPin, Menu, Star, X } from "lucide-react";
+import { Mail, MapPin, Menu, Star, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 type Tutor = {
@@ -230,8 +230,9 @@ export function InsightTutorsPage() {
       <header className="sticky top-6 z-30 bg-transparent">
         <div
           style={{
-            marginLeft: scrolled ? "74px" : "44px",
-            marginRight: scrolled ? "74px" : "44px",
+            marginLeft: scrolled ? "144px" : "44px",
+            marginRight: scrolled ? "144px" : "44px",
+            transition: "margin-left 700ms cubic-bezier(0.4, 0, 0.2, 1), margin-right 700ms cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
           {/* Nav pill */}
@@ -240,14 +241,14 @@ export function InsightTutorsPage() {
             style={{ height: "63px", borderRadius: "100px" }}
           >
             {/* Logo */}
-            <div className="flex items-center gap-1 shrink-0 pl-1">
+            <div className="flex items-center gap-1 shrink-0 pl-4">
               <svg width="36" height="36" viewBox="0 0 28 28" fill="none" aria-hidden="true">
                 <path d="M14 23 L4 17 L4 5 L14 11 Z" fill="#DDB2A3" />
                 <path d="M14 23 L24 17 L24 5 L14 11 Z" fill="#DDB2A3" fillOpacity="0.55" />
                 <line x1="14" y1="23" x2="14" y2="11" stroke="white" strokeOpacity="0.5" strokeWidth="1.4" />
                 <circle cx="14" cy="11" r="1.2" fill="white" fillOpacity="0.4" />
               </svg>
-              <span className="text-[15px] font-semibold tracking-tight whitespace-nowrap">
+              <span className="insight-heading text-[15px] font-semibold tracking-tight whitespace-nowrap">
                 Insight Tutors
               </span>
             </div>
@@ -264,7 +265,7 @@ export function InsightTutorsPage() {
             </ul>
 
             {/* Right side */}
-            <div className="ml-auto shrink-0 pr-1">
+            <div className="ml-auto shrink-0 pr-4">
               {/* Desktop: Book a free class */}
               <a
                 href="#contact"
@@ -279,7 +280,7 @@ export function InsightTutorsPage() {
                 type="button"
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 onClick={() => setMenuOpen((o) => !o)}
-                className="lg:hidden flex h-[55px] w-[36px] items-center justify-center rounded-full text-[#1A1615] transition-colors hover:bg-black/5 active:scale-[0.97]"
+                className="lg:hidden flex h-[40px] w-[56px] items-center justify-center rounded-full text-[#1A1615] transition-colors hover:bg-black/5 active:scale-[0.97]"
               >
                 {menuOpen ? <X size={26} /> : <Menu size={26} />}
               </button>
@@ -317,10 +318,9 @@ export function InsightTutorsPage() {
       <main className="pt-[87px]">{/* 63px nav + 24px sticky offset */}
         {/* Hero */}
         <section className="w-full pt-12 pb-0">
-          {/* Centered text stack */}
           <div className="mx-auto max-w-3xl px-5 text-center">
             <p className="mx-auto max-w-lg text-xl leading-relaxed text-[#453F3D]">At Insight Tutors, meet</p>
-            <h1 className="mt-2 text-5xl font-medium leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+            <h1 className="insight-heading mt-2 text-5xl font-medium leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
               The math tutor who builds your confidence
             </h1>
             <p className="mx-auto mt-2 max-w-lg text-xl leading-relaxed text-[#453F3D]">
@@ -362,8 +362,8 @@ export function InsightTutorsPage() {
         {/* About */}
         <section id="about" className="border-y border-[#E2DFDB] bg-[#EEECEA]">
           <div className="mx-auto w-full max-w-6xl px-5 py-16 md:py-20">
-            <h2 className="text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Our Story</h2>
-            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-[#555551]">
+            <h2 className="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Our Story</h2>
+            <p className="mx-auto mt-6 max-w-lg text-center text-xl leading-relaxed text-[#453F3D]">
               We're a female-led tutoring company dedicated to helping students excel in maths and STEM.
               We're interested in inspiring young students, growing their confidence and also showing them
               what a career in STEM looks like. Our tutors are not only top academic achievers — with ATARs
@@ -376,8 +376,8 @@ export function InsightTutorsPage() {
 
         {/* Tutors */}
         <section id="tutors" className="mx-auto w-full max-w-6xl px-5 py-16 md:py-20">
-          <h2 className="text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Meet Your Tutors</h2>
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#555551]">
+          <h2 className="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Meet Your Tutors</h2>
+          <p className="mx-auto mt-4 max-w-lg text-center text-xl leading-relaxed text-[#453F3D]">
             We're a team of tutors with strong backgrounds in STEM — software engineering, medical science,
             medicine, and biomedical engineering.
           </p>
@@ -417,7 +417,7 @@ export function InsightTutorsPage() {
         {/* Services */}
         <section id="services" className="border-y border-[#E2DFDB] bg-[#EEECEA]">
           <div className="mx-auto w-full max-w-6xl px-5 py-16 md:py-20">
-            <h2 className="text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What We Offer</h2>
+            <h2 className="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What We Offer</h2>
             <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {SERVICES.map((service) => (
                 <article
@@ -435,8 +435,8 @@ export function InsightTutorsPage() {
 
         {/* Reviews */}
         <section id="reviews" className="mx-auto w-full max-w-6xl px-5 py-16 md:py-20">
-          <h2 className="text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What Students Say</h2>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#555551]">
+          <h2 className="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What Students Say</h2>
+          <p className="mx-auto mt-4 max-w-lg text-center text-xl leading-relaxed text-[#453F3D]">
             Real experiences from students who've grown through one-on-one support.
           </p>
           <div className="mt-10 -mx-5">
@@ -448,8 +448,8 @@ export function InsightTutorsPage() {
         <section id="contact" className="border-t border-[#E2DFDB] bg-[#F3F1EF]">
           <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-16 md:grid-cols-2 md:py-20">
             <div>
-              <h2 className="text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Request your free trial</h2>
-              <p className="mt-4 text-base leading-relaxed text-[#555551]">
+              <h2 className="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Request your free trial</h2>
+              <p className="mx-auto mt-4 max-w-lg text-center text-xl leading-relaxed text-[#453F3D]">
                 Reach out with any questions — we'll respond within 24 hours.
               </p>
               <div className="mt-8 space-y-3 text-sm text-[#555551]">
