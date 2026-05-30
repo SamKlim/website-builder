@@ -1,0 +1,25 @@
+{
+  "terminalAllowlist": [
+    "git",
+    "npm",
+    "npx",
+    "node",
+    "ls",
+    "cat",
+    "head",
+    "rg"
+  ],
+  "mcpAllowlist": [
+    "*:*"
+  ],
+  "autoRun": {
+    "allow_instructions": [
+      "Read-only repo inspection (ls, git status, git diff, git log) is fine without prompting.",
+      "npm install, npm run dev, npm run build, and npm run preview for this Vite project are expected dev workflow."
+    ],
+    "block_instructions": [
+      "Ask before destructive git commands (reset --hard, push --force, clean -fd).",
+      "Ask before rm -rf or deleting large directories."
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.playwright-mcp/
+
+# Root-level dev screenshots and test files
+axion-colors.jpeg
+axion-fixed.jpeg
+colour-test-screenshot.png
+insight-tutors-font-test.png
+max-reed-screenshot.png
+colour-test.html
+insight-tutors-font-test.html
