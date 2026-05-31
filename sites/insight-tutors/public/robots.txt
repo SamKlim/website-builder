@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://insighttutors.com.au/sitemap-index.xml

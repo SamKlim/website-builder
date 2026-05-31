@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav';
+
+const SITE_URL = 'https://insighttutors.com.au';
+---
+
+<BaseLayout
+  title="Page Not Found | Insight Tutors"
+  description="This page could not be found. Explore VCE Maths and English tutoring in Melbourne with Insight Tutors."
+  canonicalUrl={SITE_URL}
+>
+  <meta name="robots" content="noindex" slot="head" />
+
+  <Nav client:load />
+
+  <main class="pt-[87px]">
+    <section class="relative mx-auto flex min-h-[calc(100vh-87px)] w-full max-w-4xl flex-col items-center justify-center px-5 py-20 text-center">
+      <div
+        class="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-3xl"
+        aria-hidden="true"
+      >
+        <div
+          class="absolute left-1/2 top-1/2 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 blur-3xl"
+          style="background: radial-gradient(ellipse at 35% 45%, rgba(240,116,74,0.35) 0%, transparent 55%), radial-gradient(ellipse at 65% 55%, rgba(142,175,138,0.40) 0%, transparent 55%), radial-gradient(ellipse at 50% 20%, rgba(238,188,148,0.25) 0%, transparent 50%);"
+        />
+      </div>
+
+      <p class="insight-heading text-[7rem] font-medium leading-none tracking-tight text-[#1A1615] md:text-[9rem] lg:text-[11rem]">
+        404
+      </p>
+      <h1 class="insight-heading mt-6 text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl lg:text-5xl">
+        This page doesn't exist
+      </h1>
+      <div class="mt-6 h-px w-8 bg-[#8EAF8A]" aria-hidden="true" />
+      <p class="mt-6 max-w-md text-xl leading-relaxed text-[#6B6867]">
+        The link might be broken, or the page may have moved.
+      </p>
+    </section>
+  </main>
+
+  <footer class="bg-[#1A1615]">
+    <div class="mx-auto w-full max-w-6xl px-5 md:px-16 py-8">
+      <p class="text-base font-semibold text-white">Insight Tutors</p>
+      <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60">
+        <li><a href="/" class="transition-colors hover:text-white">Home</a></li>
+        <li><a href="/tutors" class="transition-colors hover:text-white">Our Tutors</a></li>
+        <li><a href="/subjects" class="transition-colors hover:text-white">Subjects</a></li>
+        <li><a href="/pricing" class="transition-colors hover:text-white">Pricing</a></li>
+        <li><a href="/#contact" class="transition-colors hover:text-white">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+</BaseLayout>

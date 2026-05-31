@@ -720,8 +720,14 @@ export function InsightTutorsPage() {
             <div className="shrink-0 md:w-[35%]">
               <ul className="space-y-4">
                 {DIFFERENCE_POINTS_1.map((point, i) => (
-                  <li key={i} className="flex gap-2">
-                    <span className="shrink-0 font-serif text-[1.75rem] font-thin leading-none text-[#F0744A]">{'✳\uFE0E'}</span>
+                  <li key={i} className="flex gap-2.5">
+                    <Star
+                      size={16}
+                      className="mt-1 shrink-0 text-[#F0744A]"
+                      strokeWidth={1.5}
+                      fill="#F0744A"
+                      aria-hidden="true"
+                    />
                     <p className="text-base leading-relaxed text-[#555551]">{point}</p>
                   </li>
                 ))}
@@ -754,8 +760,14 @@ export function InsightTutorsPage() {
             <div className="shrink-0 md:w-[35%]">
               <ul className="space-y-4">
                 {DIFFERENCE_POINTS_2.map((point, i) => (
-                  <li key={i} className="flex gap-2">
-                    <span className="shrink-0 font-serif text-[1.75rem] font-thin leading-none text-[#F0744A]">{'✳\uFE0E'}</span>
+                  <li key={i} className="flex gap-2.5">
+                    <Star
+                      size={16}
+                      className="mt-1 shrink-0 text-[#F0744A]"
+                      strokeWidth={1.5}
+                      fill="#F0744A"
+                      aria-hidden="true"
+                    />
                     <p className="text-base leading-relaxed text-[#555551]">{point}</p>
                   </li>
                 ))}

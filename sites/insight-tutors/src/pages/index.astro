@@ -1,0 +1,246 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav';
+import TutorGrid from '../components/TutorGrid';
+import ServicesSelector from '../components/ServicesSelector';
+import ContactForm from '../components/ContactForm';
+import { TUTORS } from '../data/tutors';
+import { REVIEWS } from '../data/reviews';
+import { Star } from 'lucide-react';
+
+const SITE_URL = 'https://insighttutors.com.au';
+const tutorMarquee = [...TUTORS, ...TUTORS];
+const reviewsMarquee = [...REVIEWS, ...REVIEWS];
+
+const DIFFERENCE_POINTS_1 = [
+  "In every lesson, students work through VCAA exam-style questions throughout the entire year.",
+  "This helps them learn how to connect multiple concepts rather than practising topics in isolation.",
+];
+
+const DIFFERENCE_POINTS_2 = [
+  "Exam Vault is our own proprietary platform which contains 26 years of past exam questions organised by topic, subtopic, and varying levels of difficulty.",
+  "This allows students to target weak areas while practising questions at the same difficulty as the final exam. With the support of our tutors, our approach ensures students are fully prepared for real exam conditions.",
+];
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Insight Tutors",
+  "url": SITE_URL,
+  "description": "Expert one-on-one VCE Maths and English tutoring in Melbourne. Female-led team with ATARs of 96+.",
+  "areaServed": "Melbourne, Victoria, Australia",
+  "priceRange": "$75–$95",
+  "sameAs": [],
+};
+---
+
+<BaseLayout
+  title="Insight Tutors | Expert Maths & English Tutoring Melbourne"
+  description="One-on-one VCE Maths and English tutoring in Melbourne. Female-led team of top-ranked tutors with ATARs of 96+. In-person and online."
+  canonicalUrl={SITE_URL}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  </Fragment>
+
+  <Nav variant="home" client:load />
+
+  <main class="pt-[87px]">
+    <!-- Hero -->
+    <section class="w-full pt-12 pb-0">
+      <div class="mx-auto max-w-3xl px-5 text-center">
+        <p class="mx-auto max-w-lg text-xl leading-relaxed text-[#6B6867]">At Insight Tutors, meet</p>
+        <h1 class="insight-heading mt-2 text-5xl font-medium leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+          The math tutor who builds your confidence
+        </h1>
+        <p class="mx-auto mt-2 max-w-lg text-xl leading-relaxed text-[#6B6867]">
+          We are female math and english tutors who prioritise in-person teaching when the world goes online.
+        </p>
+        <div class="mt-8 flex items-center justify-center">
+          <a href="#contact" class="liquid-glass-light rounded-full px-7 py-3.5 text-sm ring-1 ring-black/20 transition-opacity hover:opacity-75 active:scale-[0.98]">
+            Book a free class
+          </a>
+        </div>
+      </div>
+
+      <!-- Tutor face marquee -->
+      <div class="mt-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+        <div class="flex w-max animate-marquee-tutors gap-4 pb-16">
+          {tutorMarquee.map((tutor, i) => (
+            <div key={i} class="relative h-60 w-44 shrink-0 overflow-hidden rounded-2xl">
+              <img src={tutor.image} alt={`${tutor.name} portrait`} class="h-full w-full object-cover object-top" />
+              <div class="absolute inset-x-0 bottom-0 px-3 pb-3">
+                <p class="text-[13px] font-semibold text-white" style="text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 2px rgba(0,0,0,0.5)">
+                  {tutor.name}
+                </p>
+                {tutor.atar !== "TBC" && (
+                  <p class="text-[11px] text-white/90" style="text-shadow: 0 1px 4px rgba(0,0,0,0.6)">
+                    ATAR {tutor.atar.split("·")[0].trim()}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="border-y border-[#E2DFDB] bg-[#F4F4F2]">
+      <div class="mx-auto w-full max-w-6xl px-5 md:px-16 py-16 md:py-20">
+        <h2 class="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Our Story</h2>
+        <div class="mx-auto mt-6 max-w-2xl text-center text-xl leading-relaxed text-[#6B6867]">
+          <p>
+            We're a female-led tutoring company dedicated to helping students excel in maths and english.
+            Maths is often called the language of the universe, yet many students grow up believing they
+            can't speak it. We believe every student deserves the chance to fully understand maths, to be
+            supported by a mentor who believes in them, and a space that reminds them that their mind is
+            their greatest asset. We don't just fill gaps in knowledge; we bridge the gap in confidence.
+            We cultivate a space where it is safe to be curious, safe to fail, and exhilarating to succeed.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tutors -->
+    <section id="tutors" class="mx-auto w-full max-w-6xl px-5 md:px-16 py-16 md:py-20">
+      <h2 class="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Meet Your Tutors</h2>
+      <p class="mx-auto mt-4 max-w-xl text-center text-xl leading-relaxed text-[#6B6867]">
+        Our tutors are top academic achievers with ATARs of 96+ and subject scores in the top 2%. Scientists, engineers, and specialists, each an expert in what they teach.
+      </p>
+      <TutorGrid tutors={TUTORS} client:load />
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="border-y border-[#E2DFDB] bg-[#F4F4F2]">
+      <div class="mx-auto w-full max-w-5xl px-5 py-16 md:py-20">
+        <h2 class="insight-heading text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What We Offer</h2>
+        <div class="mt-8">
+          <ServicesSelector client:load />
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Difference -->
+    <section id="difference" class="mx-auto w-full max-w-6xl px-5 py-16 md:py-20">
+      <h2 class="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Our Difference</h2>
+      <p class="mx-auto mt-4 max-w-lg text-center text-xl leading-relaxed text-[#6B6867]">
+        For Year 11 and 12 Maths, we teach differently.
+      </p>
+
+      <div class="mt-12 flex flex-col gap-10 md:flex-row md:items-center md:gap-8">
+        <div class="shrink-0 md:w-[35%]">
+          <ul class="space-y-4">
+            {DIFFERENCE_POINTS_1.map((point, i) => (
+              <li key={i} class="flex gap-2.5">
+                <Star size={16} class="mt-1 shrink-0 text-[#F0744A]" strokeWidth={1.5} fill="#F0744A" aria-hidden="true" />
+                <p class="text-base leading-relaxed text-[#555551]">{point}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="exam-vault-hidden min-w-0 flex-1" data-reveal>
+          <div class="rounded-xl border border-black/8 shadow-[0_24px_80px_rgba(26,22,21,0.14)]" style="isolation:isolate">
+            <div class="flex h-6 shrink-0 items-center gap-1.5 rounded-t-xl bg-[#E4E2DF] px-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+              <span class="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+              <span class="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+            </div>
+            <img src="/insight-tutors/example-images/exam-vault-landing.png" alt="Exam Vault, organised by topic, subtopic and difficulty level" class="block w-full rounded-b-xl" style="transform:translateZ(0.1px)" />
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 flex flex-col gap-10 md:flex-row-reverse md:items-center md:gap-8">
+        <div class="shrink-0 md:w-[35%]">
+          <ul class="space-y-4">
+            {DIFFERENCE_POINTS_2.map((point, i) => (
+              <li key={i} class="flex gap-2.5">
+                <Star size={16} class="mt-1 shrink-0 text-[#F0744A]" strokeWidth={1.5} fill="#F0744A" aria-hidden="true" />
+                <p class="text-base leading-relaxed text-[#555551]">{point}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="exam-vault-hidden min-w-0 flex-1" data-reveal>
+          <div class="rounded-xl border border-black/8 shadow-[0_24px_80px_rgba(26,22,21,0.14)]" style="isolation:isolate">
+            <div class="flex h-6 shrink-0 items-center gap-1.5 rounded-t-xl bg-[#E4E2DF] px-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+              <span class="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+              <span class="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+            </div>
+            <img src="/insight-tutors/example-images/exam-vault-questions.png" alt="Exam Vault, past exam questions organised by topic and difficulty" class="block w-full rounded-b-xl" style="transform:translateZ(0.1px)" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews" class="mx-auto w-full max-w-6xl px-5 md:px-16 py-16 md:py-20">
+      <h2 class="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What Students Say</h2>
+      <p class="mx-auto mt-4 max-w-lg text-center text-xl leading-relaxed text-[#6B6867]">
+        Real experiences from students who've grown through one-on-one support.
+      </p>
+      <div class="mt-10 -mx-5 md:-mx-16 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+        <div class="flex w-max gap-4 animate-marquee-reviews">
+          {reviewsMarquee.map((review, i) => (
+            <article key={i} class="liquid-glass-pink flex h-[290px] w-[266px] shrink-0 flex-col justify-between rounded-2xl p-4 ring-1 ring-[#F0744A]/15">
+              <div>
+                <div class="mb-4 flex gap-1.5">
+                  {Array.from({ length: 5 }).map((_, si) => (
+                    <svg key={si} width="22" height="22" viewBox="0 0 24 24" fill="#F0744A" stroke="#F0744A" stroke-width="1.5" class="text-[#F0744A]">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+                <p class="text-[15px] leading-relaxed text-[#777]">{review.quote}</p>
+              </div>
+              <p class="text-[20px] font-semibold text-black">{review.author}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="border-t border-[#E2DFDB] bg-[#F4F4F2]">
+      <div class="mx-auto flex w-full max-w-2xl flex-col items-center px-5 py-16 md:py-20">
+        <ContactForm client:load />
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-[#1A1615]">
+    <div class="mx-auto w-full max-w-6xl px-5 md:px-16 py-8">
+      <p class="text-base font-semibold text-white">Insight Tutors</p>
+      <ul class="mt-3 flex flex-col gap-2 text-sm text-white/60">
+        <li><a href="#about" class="transition-colors hover:text-white">Our Story</a></li>
+        <li><a href="#tutors" class="transition-colors hover:text-white">Our Tutors</a></li>
+        <li><a href="/subjects" class="transition-colors hover:text-white">Subjects</a></li>
+        <li><a href="#reviews" class="transition-colors hover:text-white">Student Reviews</a></li>
+        <li><a href="#contact" class="transition-colors hover:text-white">Contact Us</a></li>
+      </ul>
+    </div>
+  </footer>
+</BaseLayout>
+
+<script>
+  const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        el.classList.remove('exam-vault-hidden');
+        el.classList.add('exam-vault-visible');
+        setTimeout(() => {
+          el.classList.remove('exam-vault-visible');
+          el.classList.add('exam-vault-done');
+        }, 3600);
+        observer.unobserve(el);
+      });
+    },
+    { rootMargin: '15% 0px' }
+  );
+  els.forEach((el) => observer.observe(el));
+</script>

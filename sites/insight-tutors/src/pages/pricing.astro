@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav';
+import ContactForm from '../components/ContactForm';
+import { REVIEWS } from '../data/reviews';
+
+const SITE_URL = 'https://insighttutors.com.au';
+const reviewsMarquee = [...REVIEWS, ...REVIEWS];
+
+const INCLUDED = [
+  "Tailored lesson plan for each student",
+  "VCAA exam-style questions throughout the year",
+  "Access to Exam Vault (26 years of past exam questions)",
+  "Progress updates shared with parents",
+  "Flexible rescheduling with 24h notice",
+  "In-person or online, your choice",
+];
+
+const PRICING_FAQS = [
+  {
+    q: "Is the first lesson really free?",
+    a: "Yes. Your first session is a free trial with no payment required. Meet the tutor, see the approach, and decide from there.",
+  },
+  {
+    q: "Do you charge for rescheduling?",
+    a: "No, as long as you give at least 24 hours notice. We're flexible because life is.",
+  },
+  {
+    q: "Are there any lock-in contracts?",
+    a: "No. Sessions are booked on an ongoing weekly basis. You can pause or stop at any time.",
+  },
+  {
+    q: "Why does the price vary between $75 and $95?",
+    a: "Price depends on the subject, year level, and tutor seniority. We'll confirm the rate when we match your student.",
+  },
+];
+---
+
+<BaseLayout
+  title="Tutoring Prices | Insight Tutors"
+  description="Insight Tutors pricing: sessions from $75 to $95. First lesson is free. No lock-in contracts. VCE Maths and English tutoring in Melbourne."
+  canonicalUrl={`${SITE_URL}/pricing`}
+>
+  <Nav client:load />
+
+  <main class="pt-[87px]">
+    <!-- Hero -->
+    <section class="mx-auto w-full max-w-5xl px-5 md:px-16 py-16 md:py-24">
+      <h1 class="insight-heading text-4xl font-medium leading-[1.05] tracking-tight md:text-5xl">Pricing</h1>
+      <p class="mt-4 max-w-xl text-xl leading-relaxed text-[#6B6867]">
+        Transparent, straightforward. No hidden fees, no lock-in contracts. And your first lesson is free.
+      </p>
+    </section>
+
+    <!-- Price card -->
+    <section class="border-y border-[#E2DFDB] bg-white">
+      <div class="mx-auto w-full max-w-5xl px-5 md:px-16 py-16 md:py-20">
+        <div class="flex flex-col gap-8 md:flex-row md:items-start md:gap-16">
+
+          <div class="md:w-[40%] shrink-0">
+            <div class="rounded-2xl border border-[#E2DFDB] p-8">
+              <p class="text-xs font-semibold uppercase tracking-widest text-[#8EAF8A]">Per session</p>
+              <p class="insight-heading mt-3 text-5xl font-medium text-[#1A1615]">$75 – $95</p>
+              <p class="mt-2 text-base text-[#555551]">One hour, one-on-one.</p>
+              <div class="mt-6 h-px w-full bg-[#E2DFDB]" />
+              <p class="mt-6 text-xs font-semibold uppercase tracking-widest text-[#8EAF8A]">Free trial</p>
+              <p class="insight-heading mt-2 text-3xl font-medium text-[#1A1615]">$0</p>
+              <p class="mt-2 text-base text-[#555551]">First lesson, no commitment.</p>
+              <a href="#contact" class="mt-8 flex items-center justify-center rounded-full bg-[#1A1615] px-6 py-3.5 text-sm font-medium text-white transition-opacity hover:opacity-80 active:scale-[0.98]">
+                Book a free class
+              </a>
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <h2 class="insight-heading text-2xl font-medium text-[#1A1615]">What's included</h2>
+            <ul class="mt-6 space-y-3">
+              {INCLUDED.map((item) => (
+                <li class="flex items-start gap-3 text-base text-[#555551]">
+                  <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#8EAF8A]/15 text-[#8EAF8A]">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="mx-auto w-full max-w-3xl px-5 md:px-16 py-16 md:py-20">
+      <h2 class="insight-heading text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Pricing questions</h2>
+      <div class="mt-10 divide-y divide-[#E2DFDB]">
+        {PRICING_FAQS.map((faq) => (
+          <div class="py-6">
+            <p class="text-base font-semibold text-[#1A1615]">{faq.q}</p>
+            <p class="mt-2 text-base leading-relaxed text-[#555551]">{faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+    <!-- Reviews -->
+    <section class="border-t border-[#E2DFDB] bg-[#F4F4F2]">
+      <div class="mx-auto w-full max-w-6xl px-5 md:px-16 py-16 md:py-20">
+        <h2 class="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What Students Say</h2>
+        <p class="mx-auto mt-4 max-w-lg text-center text-xl leading-relaxed text-[#6B6867]">
+          Real experiences from students who've grown through one-on-one support.
+        </p>
+        <div class="mt-10 -mx-5 md:-mx-16 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+          <div class="flex w-max gap-4 animate-marquee-reviews">
+            {reviewsMarquee.map((review, i) => (
+              <article class="liquid-glass-pink flex h-[290px] w-[266px] shrink-0 flex-col justify-between rounded-2xl p-4 ring-1 ring-[#F0744A]/15">
+                <div>
+                  <div class="mb-4 flex gap-1.5">
+                    {Array.from({ length: 5 }).map((_, si) => (
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="#F0744A" stroke="#F0744A" stroke-width="1.5">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p class="text-[15px] leading-relaxed text-[#777]">{review.quote}</p>
+                </div>
+                <p class="text-[20px] font-semibold text-black">{review.author}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="bg-[#F4F4F2]">
+      <div class="mx-auto flex w-full max-w-2xl flex-col items-center px-5 py-16 md:py-20">
+        <ContactForm client:load />
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-[#1A1615]">
+    <div class="mx-auto w-full max-w-6xl px-5 md:px-16 py-8">
+      <p class="text-base font-semibold text-white">Insight Tutors</p>
+      <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60">
+        <li><a href="/" class="transition-colors hover:text-white">Home</a></li>
+        <li><a href="/tutors" class="transition-colors hover:text-white">Our Tutors</a></li>
+        <li><a href="/subjects" class="transition-colors hover:text-white">Subjects</a></li>
+        <li><a href="/pricing" class="transition-colors hover:text-white">Pricing</a></li>
+        <li><a href="#contact" class="transition-colors hover:text-white">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+</BaseLayout>
