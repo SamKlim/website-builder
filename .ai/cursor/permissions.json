@@ -1,13 +1,6 @@
 {
   "terminalAllowlist": [
-    "git",
-    "npm",
-    "npx",
-    "node",
-    "ls",
-    "cat",
-    "head",
-    "rg"
+    "*"
   ],
   "mcpAllowlist": [
     "*:*"
