@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, Clock, Menu, X } from "lucide-react";
-// @ts-expect-error shaders has no bundled types
 import { Shader, Swirl, ChromaFlow, FlutedGlass, FilmGrain } from "shaders/react";
 
 const NAV_LINKS = ["Projects", "Studio", "Journal", "Connect"] as const;
