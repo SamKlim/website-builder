@@ -363,6 +363,7 @@ function SlotGrid({
 
 const NAV_MARGIN_SCROLLED = "144px";
 const NAV_MARGIN_DEFAULT = "44px";
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
 export function InsightTutorsPage() {
   const [activeCategory, setActiveCategory] = useState<TutorCategory>("math");
@@ -380,6 +381,13 @@ export function InsightTutorsPage() {
   const [referralSource, setReferralSource] = useState("");
   const [referralOther, setReferralOther] = useState("");
   const [selectedSubjects, setSelectedSubjects] = useState<Set<string>>(new Set());
+  const [name, setName] = useState("");
+  const [studentName, setStudentName] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [step1Error, setStep1Error] = useState("");
+  const [submitError, setSubmitError] = useState("");
 
   const toggleSlot = (day: string, time: string) => {
     const key = slotKey(day, time);
@@ -399,6 +407,62 @@ export function InsightTutorsPage() {
   };
 
   const closeMenu = () => setMenuOpen(false);
+
+  const handleContinue = async () => {
+    if (!name.trim() || !studentName.trim() || !mobile.trim()) {
+      setStep1Error("Please fill in your name, student name, and mobile.");
+      return;
+    }
+    setStep1Error("");
+    setIsSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string,
+          subject: "New enquiry — contact details only",
+          from_name: name,
+          name,
+          student_name: studentName,
+          mobile,
+          email: email || "(not provided)",
+        }),
+      });
+      const data = await res.json() as { success: boolean };
+      if (data.success) { setFormStep("q2"); } else { setSubmitError("Something went wrong. Please try again."); }
+    } catch { setSubmitError("Something went wrong. Please try again."); }
+    finally { setIsSubmitting(false); }
+  };
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string,
+          subject: "Complete enquiry — all details",
+          from_name: name,
+          name,
+          student_name: studentName,
+          mobile,
+          email: email || "(not provided)",
+          grade,
+          subjects: selectedSubjects.size > 0 ? Array.from(selectedSubjects).join(", ") : "(none selected)",
+          tutor_preference: tutorPreference ?? "No preference",
+          availability: selectedSlots.size > 0 ? Array.from(selectedSlots).join(", ") : "(none selected)",
+          referral_source: referralSource === "Other" ? `Other: ${referralOther}` : referralSource || "(not provided)",
+        }),
+      });
+      const data = await res.json() as { success: boolean };
+      if (data.success) { setFormStep("done"); } else { setSubmitError("Something went wrong. Please try again."); }
+    } catch { setSubmitError("Something went wrong. Please try again."); }
+    finally { setIsSubmitting(false); }
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -728,30 +792,53 @@ export function InsightTutorsPage() {
 
             {/* Step 1 — Contact */}
             {formStep === "contact" && (
-              <form className="animate-form-step w-full rounded-2xl border border-[#DCDCDA] bg-white/70 p-6">
+              <form
+                className="animate-form-step w-full rounded-2xl border border-[#DCDCDA] bg-white/70 p-6"
+                onSubmit={(e) => { e.preventDefault(); void handleContinue(); }}
+              >
                 <div className="grid gap-4">
                   <label className="text-sm font-medium text-[#1A1615]">
                     Your name*
-                    <input className="mt-2 w-full rounded-xl border border-[#D4D0CB] bg-white px-3 py-2.5 text-sm text-[#1A1615] outline-none transition-colors focus:border-[#8EAF8A]" />
+                    <input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="mt-2 w-full rounded-xl border border-[#D4D0CB] bg-white px-3 py-2.5 text-sm text-[#1A1615] outline-none transition-colors focus:border-[#8EAF8A]"
+                    />
                   </label>
                   <label className="text-sm font-medium text-[#1A1615]">
                     Name of student*
-                    <input className="mt-2 w-full rounded-xl border border-[#D4D0CB] bg-white px-3 py-2.5 text-sm text-[#1A1615] outline-none transition-colors focus:border-[#8EAF8A]" />
+                    <input
+                      value={studentName}
+                      onChange={(e) => setStudentName(e.target.value)}
+                      className="mt-2 w-full rounded-xl border border-[#D4D0CB] bg-white px-3 py-2.5 text-sm text-[#1A1615] outline-none transition-colors focus:border-[#8EAF8A]"
+                    />
                   </label>
                   <label className="text-sm font-medium text-[#1A1615]">
                     Mobile*
-                    <input type="tel" required className="mt-2 w-full rounded-xl border border-[#D4D0CB] bg-white px-3 py-2.5 text-sm text-[#1A1615] outline-none transition-colors focus:border-[#8EAF8A]" />
+                    <input
+                      type="tel"
+                      value={mobile}
+                      onChange={(e) => setMobile(e.target.value)}
+                      className="mt-2 w-full rounded-xl border border-[#D4D0CB] bg-white px-3 py-2.5 text-sm text-[#1A1615] outline-none transition-colors focus:border-[#8EAF8A]"
+                    />
                   </label>
                   <label className="text-sm font-medium text-[#1A1615]">
                     Email <span className="font-normal text-[#888884]">(optional)</span>
-                    <input type="email" className="mt-2 w-full rounded-xl border border-[#D4D0CB] bg-white px-3 py-2.5 text-sm text-[#1A1615] outline-none transition-colors focus:border-[#8EAF8A]" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="mt-2 w-full rounded-xl border border-[#D4D0CB] bg-white px-3 py-2.5 text-sm text-[#1A1615] outline-none transition-colors focus:border-[#8EAF8A]"
+                    />
                   </label>
+                  {step1Error && <p className="text-sm text-red-500">{step1Error}</p>}
+                  {submitError && <p className="text-sm text-red-500">{submitError}</p>}
                   <button
-                    type="button"
-                    onClick={() => setFormStep("q2")}
-                    className="mt-2 rounded-full bg-[#1A1615] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 active:scale-[0.98]"
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="mt-2 rounded-full bg-[#1A1615] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                   >
-                    Continue
+                    {isSubmitting ? "Sending…" : "Continue"}
                   </button>
                 </div>
               </form>
@@ -866,13 +953,14 @@ export function InsightTutorsPage() {
                     )}
                   </label>
 
+                  {submitError && <p className="text-sm text-red-500">{submitError}</p>}
                   <button
                     type="button"
-                    disabled={referralSource === "Other" && referralOther.trim() === ""}
-                    onClick={() => setFormStep("done")}
+                    disabled={isSubmitting || (referralSource === "Other" && referralOther.trim() === "")}
+                    onClick={() => { void handleSubmit(); }}
                     className="mt-2 w-full rounded-full bg-[#1A1615] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                   >
-                    Submit
+                    {isSubmitting ? "Sending…" : "Submit"}
                   </button>
                 </div>
               </div>
