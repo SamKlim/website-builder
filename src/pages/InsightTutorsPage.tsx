@@ -181,9 +181,10 @@ function TutorCard({ tutor, index }: { tutor: Tutor; index: number }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <article
+    <div
       role="button"
       tabIndex={0}
+      aria-expanded={expanded}
       onClick={() => setExpanded((e) => !e)}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setExpanded((prev) => !prev); }}
       className="insight-tutor-card flex flex-col rounded-2xl bg-white border border-[#DCDCDA] p-3 select-none"
@@ -218,7 +219,7 @@ function TutorCard({ tutor, index }: { tutor: Tutor; index: number }) {
           {expanded ? <ArrowUp size={14} /> : <ArrowDown size={14} />}
         </span>
       </div>
-    </article>
+    </div>
   );
 }
 
@@ -360,17 +361,18 @@ function SlotGrid({
   );
 }
 
+const NAV_MARGIN_SCROLLED = "144px";
+const NAV_MARGIN_DEFAULT = "44px";
+
 export function InsightTutorsPage() {
   const [activeCategory, setActiveCategory] = useState<TutorCategory>("math");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const ticking = useRef(false);
   const examVaultRef = useRef<HTMLDivElement>(null);
-  const [examVaultVisible, setExamVaultVisible] = useState(false);
-  const [examVaultDone, setExamVaultDone] = useState(false);
+  const { visible: examVaultVisible, done: examVaultDone } = useScrollReveal(examVaultRef);
   const examVaultRef2 = useRef<HTMLDivElement>(null);
-  const [examVaultVisible2, setExamVaultVisible2] = useState(false);
-  const [examVaultDone2, setExamVaultDone2] = useState(false);
+  const { visible: examVaultVisible2, done: examVaultDone2 } = useScrollReveal(examVaultRef2);
   const [tutorPreference, setTutorPreference] = useState<TutorPreference | null>(null);
   const [selectedSlots, setSelectedSlots] = useState<Set<string>>(new Set());
   const [formStep, setFormStep] = useState<FormStep>("contact");
@@ -412,60 +414,14 @@ export function InsightTutorsPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    const el = examVaultRef.current;
-    if (!el) return;
-    let doneTimer: ReturnType<typeof setTimeout>;
-    const check = () => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 1.15) {
-        setExamVaultVisible(true);
-        window.removeEventListener("scroll", check);
-        doneTimer = setTimeout(() => setExamVaultDone(true), 3600);
-      }
-    };
-    const startTimer = setTimeout(() => {
-      window.addEventListener("scroll", check, { passive: true });
-      check();
-    }, 150);
-    return () => {
-      clearTimeout(startTimer);
-      clearTimeout(doneTimer);
-      window.removeEventListener("scroll", check);
-    };
-  }, []);
-
-  useEffect(() => {
-    const el = examVaultRef2.current;
-    if (!el) return;
-    let doneTimer: ReturnType<typeof setTimeout>;
-    const check = () => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 1.15) {
-        setExamVaultVisible2(true);
-        window.removeEventListener("scroll", check);
-        doneTimer = setTimeout(() => setExamVaultDone2(true), 3600);
-      }
-    };
-    const startTimer = setTimeout(() => {
-      window.addEventListener("scroll", check, { passive: true });
-      check();
-    }, 150);
-    return () => {
-      clearTimeout(startTimer);
-      clearTimeout(doneTimer);
-      window.removeEventListener("scroll", check);
-    };
-  }, []);
-
   return (
     <div className="bg-[#F4F4F2] text-[#1A1615]">
       {/* Nav — sticky, pill, liquid glass, 24px outer margin each side */}
       <header className="sticky top-6 z-30 bg-transparent">
         <div
           style={{
-            marginLeft: scrolled ? "144px" : "44px",
-            marginRight: scrolled ? "144px" : "44px",
+            marginLeft: scrolled ? NAV_MARGIN_SCROLLED : NAV_MARGIN_DEFAULT,
+            marginRight: scrolled ? NAV_MARGIN_SCROLLED : NAV_MARGIN_DEFAULT,
             transition: "margin-left 700ms cubic-bezier(0.4, 0, 0.2, 1), margin-right 700ms cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >

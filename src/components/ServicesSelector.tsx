@@ -147,6 +147,7 @@ function MobileAccordion({
             type="button"
             onClick={() => onToggle(i)}
             aria-expanded={openIdx === i}
+            aria-controls={`service-panel-mobile-${i}`}
             className={[
               "flex w-full items-baseline gap-1.5 rounded-2xl px-5 py-3 text-left transition-all duration-200",
               openIdx === i
@@ -171,7 +172,7 @@ function MobileAccordion({
             </span>
           </button>
           {openIdx === i && (
-            <div className="service-panel-animate px-5 pb-5 pt-2">
+            <div id={`service-panel-mobile-${i}`} className="service-panel-animate px-5 pb-5 pt-2">
               <ServiceDetailContent service={service} compact />
             </div>
           )}
