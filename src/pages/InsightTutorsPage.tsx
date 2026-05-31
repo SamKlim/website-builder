@@ -61,8 +61,8 @@ const TUTORS: Tutor[] = [
     name: "Alyssa",
     expertise: "VCE Math Methods, Year 1–10 Maths",
     bio: "Hi, I'm Alyssa — a passionate tutor with a genuine love for helping students grow in confidence and ability. I believe that with the right explanation and a supportive environment, every student can develop a strong grasp of the subject.\n\nI tailor each session to the individual, focusing on the areas where they need the most support while building on their existing strengths. My aim is always for students to leave each lesson feeling more capable and prepared than when they arrived.",
-    atar: "TBC",
-    scores: "TBC",
+    atar: "99.6",
+    scores: "Specialist Maths: 51 · Methods: 44",
     image: "/tutors/alyssa.png",
     category: "math",
   },
@@ -83,6 +83,15 @@ const TUTORS: Tutor[] = [
     scores: "English: TBC · English Literature: TBC",
     image: "/tutors/michaela.png",
     category: "english",
+  },
+  {
+    name: "Zara",
+    expertise: "VCE General Maths, Year 1–10 Maths",
+    bio: "Hi, I'm Zara. I'm studying a Bachelor of Commerce at Monash University, and graduated with an ATAR of 94.50 and achieved a 49 study score in General Maths. I find it incredibly rewarding to help others understand maths — whether that's classmates at university or students I tutor.\n\nMy tutoring style is flexible and tailored to each student's needs. I meet students at whatever level they are at when they start with me. That might mean covering content from the very beginning, addressing specific gaps, working through exercise questions and practice tests, or reviewing past assessments. I also share test-taking tips and strategies to help students perform their best on every maths test. I work together with students to gain confidence as well as knowledge; success is not just about how to get better at maths, it's also about building confidence in yourself and your skills to apply yourself to every situation.",
+    atar: "94.50",
+    scores: "General Maths: 49",
+    image: "/tutors/zara.png",
+    category: "math",
   },
 ];
 
@@ -618,12 +627,14 @@ export function InsightTutorsPage() {
                     >
                       {tutor.name}
                     </p>
-                    <p
-                      className="text-[11px] text-white/90"
-                      style={{ textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}
-                    >
-                      ATAR {tutor.atar.split("·")[0].trim()}
-                    </p>
+                    {tutor.atar !== "TBC" && (
+                      <p
+                        className="text-[11px] text-white/90"
+                        style={{ textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}
+                      >
+                        ATAR {tutor.atar.split("·")[0].trim()}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
