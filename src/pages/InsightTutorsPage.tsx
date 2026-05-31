@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowUp, ChevronDown, Menu, Star, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { DifferenceAsterisk } from "../components/DifferenceAsterisk";
 import { ServicesSelector } from "../components/ServicesSelector";
 
 type TutorCategory = "math" | "english";
@@ -720,14 +721,8 @@ export function InsightTutorsPage() {
             <div className="shrink-0 md:w-[35%]">
               <ul className="space-y-4">
                 {DIFFERENCE_POINTS_1.map((point, i) => (
-                  <li key={i} className="flex gap-2.5">
-                    <Star
-                      size={16}
-                      className="mt-1 shrink-0 text-[#F0744A]"
-                      strokeWidth={1.5}
-                      fill="#F0744A"
-                      aria-hidden="true"
-                    />
+                  <li key={i} className="flex items-start gap-2">
+                    <DifferenceAsterisk />
                     <p className="text-base leading-relaxed text-[#555551]">{point}</p>
                   </li>
                 ))}
@@ -760,14 +755,8 @@ export function InsightTutorsPage() {
             <div className="shrink-0 md:w-[35%]">
               <ul className="space-y-4">
                 {DIFFERENCE_POINTS_2.map((point, i) => (
-                  <li key={i} className="flex gap-2.5">
-                    <Star
-                      size={16}
-                      className="mt-1 shrink-0 text-[#F0744A]"
-                      strokeWidth={1.5}
-                      fill="#F0744A"
-                      aria-hidden="true"
-                    />
+                  <li key={i} className="flex items-start gap-2">
+                    <DifferenceAsterisk />
                     <p className="text-base leading-relaxed text-[#555551]">{point}</p>
                   </li>
                 ))}

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import DifferenceAsterisk from '../../components/DifferenceAsterisk.astro';
 import Nav from '../../components/Nav';
 import TutorGrid from '../../components/TutorGrid';
 import ContactForm from '../../components/ContactForm';
@@ -17,7 +18,6 @@ import {
   getWhereWeTutorCopy,
 } from '../../data/locations';
 import type { GetStaticPaths } from 'astro';
-import { Star } from 'lucide-react';
 
 export const getStaticPaths = (() => {
   return SUBJECT_PAGES.map((subject) => ({
@@ -99,8 +99,8 @@ const localBusinessSchema = buildLocalBusinessSchema(SITE_URL, pageUrl, tutorLab
           <div class="shrink-0 md:w-[35%]">
             <ul class="space-y-4">
               {DIFFERENCE_POINTS_1.map((point, i) => (
-                <li key={i} class="flex gap-2.5">
-                  <Star size={16} class="mt-1 shrink-0 text-[#F0744A]" strokeWidth={1.5} fill="#F0744A" aria-hidden="true" />
+                <li key={i} class="flex items-start gap-2">
+                  <DifferenceAsterisk />
                   <p class="text-base leading-relaxed text-[#555551]">{point}</p>
                 </li>
               ))}
@@ -122,8 +122,8 @@ const localBusinessSchema = buildLocalBusinessSchema(SITE_URL, pageUrl, tutorLab
           <div class="shrink-0 md:w-[35%]">
             <ul class="space-y-4">
               {DIFFERENCE_POINTS_2.map((point, i) => (
-                <li key={i} class="flex gap-2.5">
-                  <Star size={16} class="mt-1 shrink-0 text-[#F0744A]" strokeWidth={1.5} fill="#F0744A" aria-hidden="true" />
+                <li key={i} class="flex items-start gap-2">
+                  <DifferenceAsterisk />
                   <p class="text-base leading-relaxed text-[#555551]">{point}</p>
                 </li>
               ))}

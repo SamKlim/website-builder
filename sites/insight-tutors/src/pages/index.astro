@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DifferenceAsterisk from '../components/DifferenceAsterisk.astro';
 import Nav from '../components/Nav';
 import TutorGrid from '../components/TutorGrid';
 import ServicesSelector from '../components/ServicesSelector';
 import ContactForm from '../components/ContactForm';
 import { TUTORS } from '../data/tutors';
 import { REVIEWS } from '../data/reviews';
-import { Star } from 'lucide-react';
 
 const SITE_URL = 'https://insighttutors.com.au';
 const tutorMarquee = [...TUTORS, ...TUTORS];
@@ -132,8 +132,8 @@ const localBusinessSchema = {
         <div class="shrink-0 md:w-[35%]">
           <ul class="space-y-4">
             {DIFFERENCE_POINTS_1.map((point, i) => (
-              <li key={i} class="flex gap-2.5">
-                <Star size={16} class="mt-1 shrink-0 text-[#F0744A]" strokeWidth={1.5} fill="#F0744A" aria-hidden="true" />
+              <li key={i} class="flex items-start gap-2">
+                <DifferenceAsterisk />
                 <p class="text-base leading-relaxed text-[#555551]">{point}</p>
               </li>
             ))}
@@ -155,8 +155,8 @@ const localBusinessSchema = {
         <div class="shrink-0 md:w-[35%]">
           <ul class="space-y-4">
             {DIFFERENCE_POINTS_2.map((point, i) => (
-              <li key={i} class="flex gap-2.5">
-                <Star size={16} class="mt-1 shrink-0 text-[#F0744A]" strokeWidth={1.5} fill="#F0744A" aria-hidden="true" />
+              <li key={i} class="flex items-start gap-2">
+                <DifferenceAsterisk />
                 <p class="text-base leading-relaxed text-[#555551]">{point}</p>
               </li>
             ))}
