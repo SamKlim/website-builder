@@ -363,11 +363,13 @@ function SlotGrid({
 
 const NAV_MARGIN_SCROLLED = "144px";
 const NAV_MARGIN_DEFAULT = "44px";
+const LG_BREAKPOINT = 1024;
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
 export function InsightTutorsPage() {
   const [activeCategory, setActiveCategory] = useState<TutorCategory>("math");
   const [scrolled, setScrolled] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= LG_BREAKPOINT);
   const [menuOpen, setMenuOpen] = useState(false);
   const ticking = useRef(false);
   const examVaultRef = useRef<HTMLDivElement>(null);
@@ -478,31 +480,37 @@ export function InsightTutorsPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const onResize = () => setIsDesktop(window.innerWidth >= LG_BREAKPOINT);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <div className="bg-[#F4F4F2] text-[#1A1615]">
       {/* Nav — sticky, pill, liquid glass, 24px outer margin each side */}
       <header className="sticky top-6 z-30 bg-transparent">
         <div
           style={{
-            marginLeft: scrolled ? NAV_MARGIN_SCROLLED : NAV_MARGIN_DEFAULT,
-            marginRight: scrolled ? NAV_MARGIN_SCROLLED : NAV_MARGIN_DEFAULT,
+            marginLeft: scrolled && isDesktop ? NAV_MARGIN_SCROLLED : NAV_MARGIN_DEFAULT,
+            marginRight: scrolled && isDesktop ? NAV_MARGIN_SCROLLED : NAV_MARGIN_DEFAULT,
             transition: "margin-left 700ms cubic-bezier(0.4, 0, 0.2, 1), margin-right 700ms cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
           {/* Nav pill */}
           <div
-            className="insight-nav-glass relative flex items-center transition-all duration-500 ease-out"
+            className="insight-nav-glass relative flex items-center overflow-hidden transition-all duration-500 ease-out"
             style={{ height: "63px", borderRadius: "100px" }}
           >
             {/* Logo */}
-            <div className="flex items-center gap-1 shrink-0 pl-4">
-              <svg width="36" height="36" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <div className="flex min-w-0 items-center gap-1 shrink-0 pl-2 min-[400px]:pl-4">
+              <svg width="36" height="36" viewBox="0 0 28 28" fill="none" aria-hidden="true" className="shrink-0">
                 <path d="M14 23 L4 17 L4 5 L14 11 Z" fill="#F0744A" />
                 <path d="M14 23 L24 17 L24 5 L14 11 Z" fill="#F0744A" fillOpacity="0.55" />
                 <line x1="14" y1="23" x2="14" y2="11" stroke="white" strokeOpacity="0.5" strokeWidth="1.4" />
                 <circle cx="14" cy="11" r="1.2" fill="white" fillOpacity="0.4" />
               </svg>
-              <span className="insight-heading text-[15px] font-semibold tracking-tight whitespace-nowrap">
+              <span className="insight-heading hidden min-[320px]:inline text-[15px] font-semibold tracking-tight whitespace-nowrap">
                 Insight Tutors
               </span>
             </div>
@@ -519,7 +527,7 @@ export function InsightTutorsPage() {
             </ul>
 
             {/* Right side */}
-            <div className="ml-auto shrink-0 pr-4">
+            <div className="ml-auto shrink-0 pr-1 min-[400px]:pr-4">
               {/* Desktop: Book a free class */}
               <a
                 href="#contact"
@@ -534,7 +542,7 @@ export function InsightTutorsPage() {
                 type="button"
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 onClick={() => setMenuOpen((o) => !o)}
-                className="lg:hidden flex h-[40px] w-[56px] items-center justify-center rounded-full text-[#1A1615] transition-colors hover:bg-black/5 active:scale-[0.97]"
+                className="lg:hidden flex h-[40px] w-[40px] min-[400px]:w-[56px] items-center justify-center rounded-full text-[#1A1615] transition-colors hover:bg-black/5 active:scale-[0.97]"
               >
                 {menuOpen ? <X size={26} /> : <Menu size={26} />}
               </button>
