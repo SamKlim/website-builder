@@ -16,13 +16,13 @@ Follow `/start-chat`. User does not need to type the command.
 | Intention | Route |
 |-----------|-------|
 | **Build** | Auto-enter `/brainstorm` (read skill file) → plan (`Status: draft`) → user approves → code |
-| **Fix** | Investigate → fix → tests when code changes |
+| **Fix** | Investigate → fix → tests at `/finish-coding` |
 | **Question** | Answer or explore. No code unless asked. |
 | **Other** | Clarify, then agree the route |
 
 **Build gate:** No app code until `.ai/docs/plans/active-*.md` has `Status: approved` and the user says so explicitly.
 
-While coding: `.ai/rules/test-pipeline.md` runs after features and fixes (loads when editing app code).
+While coding: do not write tests — defer to `/finish-coding`. Test pipeline rule always loads: `.ai/rules/test-pipeline.md`.
 
 ### End (user invokes `/finish-coding`)
 
@@ -63,7 +63,8 @@ Do not duplicate rule content in this file.
 
 - `/start-chat` — every new chat: read memory, ask intention, route (`.ai/skills/start-chat/`)
 - `/brainstorm` — **automatic on Build** via `/start-chat`. Read-only until plan approved (`.ai/skills/brainstorm/`)
-- `/finish-coding` — end of chat checklist: tests, memory, journal, commit, push (`.ai/skills/finish-coding/`)
+- `/test` — full test pipeline: plan in chat → write/update tests → run → self-heal (`.ai/skills/test/`)
+- `/finish-coding` — end of chat checklist: code review → compile → tests → memory, journal, commit, push (`.ai/skills/finish-coding/`)
 - `/setup-new-project` — first-time setup walkthrough for a fresh repo (`.ai/skills/setup-new-project/`)
 - `/ui-ux-pro-max` — UI/UX guidance (`.ai/skills/ui-ux-pro-max/`)
 

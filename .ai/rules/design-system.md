@@ -1,6 +1,6 @@
 ---
 description: Design system — typography, UI aesthetics
-alwaysApply: false
+alwaysApply: true
 paths:
   - "app/**"
   - "components/**"
@@ -9,6 +9,14 @@ paths:
   - "tailwind.config.ts"
 globs: "{app,components,lib/design-system}/**"
 ---
+
+# Agent adherence
+
+This file loads on every chat (`alwaysApply: true`).
+
+- **At chat start:** say whether this file is in context (e.g. in the "Loaded:" line).
+- **While doing UI work:** say when you are following these rules (e.g. "Using motion tokens from lib/design-system/motion.ts").
+- **When not following or unsure:** say so explicitly and ask before proceeding — do not silently skip or guess.
 
 # Typography
 
@@ -30,6 +38,46 @@ Always define a type scale first, then apply named type styles. Every project mu
 - Focus animation on high-impact moments (page load reveals, scroll-triggered entries) over scattered micro-interactions
 - Backgrounds should create atmosphere and depth — not default to flat solid colours
 - Spatial composition: use generous negative space, asymmetry, and intentional layout choices
+
+# Motion & transitions
+
+Motion should explain **relationship between states**, not just decorate. Pick the pattern by what changed.
+
+**Tokens:** import durations and distances from `lib/design-system/motion.ts`. Do not hardcode ms or px values in components or in this rule file.
+
+## Default durations
+
+- Use `MOTION_ENTER_MS` and `MOTION_EXIT_MS` from `lib/design-system/motion.ts`
+- Exit token is always shorter than enter — that relationship is defined in the token file, not here
+
+## Pattern selection
+
+| Pattern | Use when | Example |
+|---------|----------|---------|
+| **Fade** | Element enters/exits within the same screen | Dialog, snackbar, FAB |
+| **Fade-through** | Two states with no spatial relationship | Bottom nav tabs, swapping unrelated lists |
+| **Shared axis** | Linear wizard / stepper forward and back | Onboarding steps, multi-step forms |
+| **Container transform** | One element expands into the next view | Card → detail screen |
+
+- **First paint / content reveal:** fade only (no directional slide)
+- **Wizard steps:** shared axis — outgoing slides/fades left, incoming from right; reverse for back. Uses `MOTION_SHARED_AXIS_OFFSET_PX`. Same on mobile and desktop (see Mobile below).
+- Do **not** default every page load to fade-up; it does not communicate step progression
+
+## Mobile
+
+- **Match native OS navigation** for step and screen transitions — mobile web should feel like the platform, not like a different app
+- **iOS:** forward = push (incoming from the right, outgoing to the left); back = pop (reverse)
+- **Android:** Material **shared axis** on the X axis — same forward/back relationship as iOS push/pop
+- Wizard / stepper flows use **shared axis** on mobile — not fade-through as a stand-in for navigation
+- Respect `prefers-reduced-motion` (instant, no opacity trap)
+
+True native iOS/Android apps (not mobile web): use platform navigation APIs (UIKit, Material Motion) directly.
+
+## Accessibility
+
+- Use `useReducedMotion()` from `motion/react` on every animated reveal
+- Under reduced motion: skip spatial movement, show final state instantly, duration 0
+- Never rely on animation completing to make content visible
 
 # Page layout
 

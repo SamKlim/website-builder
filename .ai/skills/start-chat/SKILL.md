@@ -39,7 +39,7 @@ Full steps live in this skill. `CLAUDE.md` § Chat workflow is the summary only.
    | Intention | Next step |
    |-----------|-----------|
    | **Build** | See **Build route** below |
-   | **Fix** | Investigate → fix → tests when code changes |
+   | **Fix** | Investigate → fix → tests at `/finish-coding` |
    | **Question** | Answer or explore. No code unless they ask. |
    | **Other** | Clarify, then agree the route |
 

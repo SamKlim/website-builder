@@ -1,0 +1,23 @@
+{
+  "name": "Insight Tutors",
+  "colors": {
+    "coral": "#F0744A",
+    "sage": "#8EAF8A",
+    "background": "#F4F4F2",
+    "textPrimary": "#1A1615",
+    "textMuted": "#6B6867",
+    "textSecondary": "#555551",
+    "border": "#E2DFDB",
+    "footer": "#1A1615"
+  },
+  "fonts": {
+    "heading": "'New York', 'Iowan Old Style', 'Apple Garamond', Georgia, serif",
+    "body": "-apple-system, 'SF Pro Display', BlinkMacSystemFont, ui-sans-serif, 'Segoe UI', 'Roboto', sans-serif",
+    "marketingEmbedded": {
+      "heading": "Lora.ttf (matches insight-heading serif)",
+      "body": "Inter.ttf (matches site sans-serif)"
+    },
+    "canvaSubstitute": "Inter or DM Sans"
+  },
+  "website": "https://insighttutors.com.au"
+}

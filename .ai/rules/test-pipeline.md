@@ -1,21 +1,24 @@
 ---
-description:  4-stage automated test generation and self-healing pipeline. Runs automatically after any feature, bug fix, or improvement is implemented.
-alwaysApply: false
-paths:
-  - "app/**"
-  - "components/**"
-  - "lib/**"
-  - "tests/**"
-globs: "{app,components,lib,tests}/**"
+description: Test pipeline — plan, write, run, and self-heal. Runs at `/finish-coding`, not during coding.
+alwaysApply: true
+paths: []
+globs: "**/*"
 ---
 
 # AI Multi-Step Testing Pipeline
 
-**When this rule loads:** you are editing app code or tests.
+**When this rule loads:** every chat (`alwaysApply: true`).
 
-**When the pipeline runs:** automatically after every feature, bug fix, or improvement in this chat — without being asked. Also when told to "test" or "run a test cycle". `/finish-coding` runs the test commands again as a final check.
+**When the pipeline runs:**
 
-Follow all stages in order. Do not skip stages. Do not write test code before Stage 2.
+| When | What runs |
+|------|-----------|
+| **During coding** | Do **not** write or edit tests. Focus on implementation. Tests are deferred to `/finish-coding`. |
+| **`/finish-coding`** | Full pipeline (Stages 0–5) for everything new or changed in this chat. |
+
+Also runs when the user explicitly says "test", "run tests", or invokes `/test`.
+
+Follow all stages in order. Do not skip stages. **Do not write or edit test code before Stage 1 is posted in chat and approved** (unless the user says "auto-run").
 
 ---
 
@@ -52,15 +55,56 @@ Required before E2E Stage 3 and Playwright MCP in Stage 4. **Not needed for unit
 
 ## Stage 1 — Tactical Plan (Planner Mode)
 
-1. Read the **code just written** for this feature, bug fix, or improvement.
+1. Read the **code just written or changed** for this feature, bug fix, or improvement.
 2. Identify which test layer(s) apply (unit, integration, E2E — often more than one).
-3. Draft a markdown list of **3–5 explicit execution scenarios** per layer.
-   - Must include: happy paths, failure/validation cases, network/API edge cases, and element state boundary conditions (E2E).
+3. **Post the full test plan in chat** using the format below. The user must see every scenario and every state before any test file is written or edited.
 4. **WAIT** for confirmation before proceeding — unless the user says "auto-run".
+
+### Required chat format (Stage 1)
+
+Post this in chat. Do not skip sections — use "None" or "N/A" if a section does not apply.
+
+```markdown
+## Test plan — [feature or change name]
+
+### What changed
+- [file or behaviour]: [one-line summary]
+
+### Unit tests
+| Scenario | States / inputs covered | Expected outcome |
+|----------|-------------------------|------------------|
+| ... | empty, valid, invalid, boundary | ... |
+
+### Integration tests
+| Scenario | States / inputs covered | Expected outcome |
+|----------|-------------------------|------------------|
+| ... | ... | ... |
+
+### E2E tests
+| Scenario | UI states visible | User action → expected on screen |
+|----------|-------------------|----------------------------------|
+| ... | loading, success, error, disabled | ... |
+
+### Existing tests to update
+| File | What changed in app code | How the test must change |
+|------|--------------------------|--------------------------|
+| ... | ... | ... |
+
+### Not testing (and why)
+- [layer or scenario]: [reason — e.g. pure CSS, user waived, covered elsewhere]
+```
+
+**Minimum per layer:** 3–5 explicit scenarios when that layer applies. Must include happy paths, failure/validation cases, network/API edge cases (integration), and UI state boundary conditions (E2E: loading, error, disabled, empty where relevant).
+
+**Visibility rule:** Never write test code silently. If you skip Stage 1 in chat, you must not proceed to Stage 2.
 
 ---
 
 ## Stage 2 — Code Generation (Generator Mode)
+
+**Prerequisite:** Stage 1 test plan posted in chat and approved (or user said "auto-run").
+
+Implement exactly the scenarios from the approved plan. If you discover a gap while writing, stop and append to the Stage 1 plan in chat before adding tests.
 
 ### Where tests live
 
