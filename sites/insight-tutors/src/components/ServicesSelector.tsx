@@ -27,7 +27,7 @@ const SERVICES: readonly ServiceItem[] = [
   },
   {
     title: "Our Locations",
-    description: `We believe in-person works best, but know it can be hard every week, which is why we offer a mix of the two, or completely online. Online and in the inner north and east of Melbourne: ${formatSuburbList(TUTORING_SUBURBS)}.`,
+    description: `Online and in the inner north and east of Melbourne: ${formatSuburbList(TUTORING_SUBURBS)}. We believe in-person works best, but know it can be hard every week, which is why we offer a mix of the two, or completely online.`,
     gradient: "radial-gradient(ellipse at 24% 58%, rgba(108,158,102,0.92) 0%, transparent 48%), radial-gradient(ellipse at 74% 26%, rgba(215,138,82,0.85) 0%, transparent 48%), radial-gradient(ellipse at 62% 80%, rgba(145,195,135,0.65) 0%, transparent 44%), radial-gradient(ellipse at 14% 16%, rgba(242,185,118,0.52) 0%, transparent 42%), #E2EEDC",
   },
   {
