@@ -26,29 +26,14 @@ const SERVICES: readonly ServiceItem[] = [
     ],
   },
   {
-    title: "Where We Are",
-    description: `Online and in the inner north and east of Melbourne: ${formatSuburbList(TUTORING_SUBURBS)}.`,
+    title: "Our Locations",
+    description: `We believe in-person works best, but know it can be hard every week, which is why we offer a mix of the two, or completely online. Online and in the inner north and east of Melbourne: ${formatSuburbList(TUTORING_SUBURBS)}.`,
     gradient: "radial-gradient(ellipse at 24% 58%, rgba(108,158,102,0.92) 0%, transparent 48%), radial-gradient(ellipse at 74% 26%, rgba(215,138,82,0.85) 0%, transparent 48%), radial-gradient(ellipse at 62% 80%, rgba(145,195,135,0.65) 0%, transparent 44%), radial-gradient(ellipse at 14% 16%, rgba(242,185,118,0.52) 0%, transparent 42%), #E2EEDC",
   },
   {
     title: "Our Prices",
     description: "Sessions priced between $75 – $95.",
     gradient: "radial-gradient(ellipse at 22% 44%, rgba(218,168,82,0.92) 0%, transparent 48%), radial-gradient(ellipse at 72% 56%, rgba(145,112,202,0.82) 0%, transparent 48%), radial-gradient(ellipse at 56% 12%, rgba(245,218,128,0.68) 0%, transparent 44%), radial-gradient(ellipse at 16% 80%, rgba(172,145,222,0.52) 0%, transparent 42%), #F0E8D2",
-  },
-  {
-    title: "Our Difference",
-    description: "Mostly women, all passionate about STEM. For female students, that means a real role model in the room. For every student, it means a tutor who is genuinely invested in them as a person, not just a subject.",
-    gradient: "radial-gradient(ellipse at 28% 28%, rgba(218,92,138,0.90) 0%, transparent 48%), radial-gradient(ellipse at 72% 68%, rgba(108,175,135,0.85) 0%, transparent 48%), radial-gradient(ellipse at 66% 14%, rgba(245,162,185,0.68) 0%, transparent 44%), radial-gradient(ellipse at 14% 76%, rgba(142,205,162,0.52) 0%, transparent 42%), #F5E5EE",
-  },
-  {
-    title: "Our Experience",
-    description: "300+ students tutored over 8 years combined. All our tutors are in the top 2% of Australia (98+ ATAR).",
-    gradient: "radial-gradient(ellipse at 35% 52%, rgba(82,145,92,0.92) 0%, transparent 48%), radial-gradient(ellipse at 74% 30%, rgba(218,132,102,0.85) 0%, transparent 48%), radial-gradient(ellipse at 18% 20%, rgba(128,188,128,0.68) 0%, transparent 44%), radial-gradient(ellipse at 70% 78%, rgba(242,172,142,0.55) 0%, transparent 42%), #D8ECD2",
-  },
-  {
-    title: "In Person & Online",
-    description: "We believe in-person works best, but know it can be hard every week, which is why we offer a mix of the two, or completely remote.",
-    gradient: "radial-gradient(ellipse at 52% 30%, rgba(152,118,215,0.92) 0%, transparent 48%), radial-gradient(ellipse at 20% 68%, rgba(222,165,88,0.85) 0%, transparent 48%), radial-gradient(ellipse at 78% 66%, rgba(192,152,235,0.68) 0%, transparent 44%), radial-gradient(ellipse at 65% 10%, rgba(245,198,122,0.55) 0%, transparent 42%), #E8E0F5",
   },
 ] as const;
 
