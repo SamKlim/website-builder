@@ -10,6 +10,7 @@ type SubjectGroup = {
 type ServiceItem = {
   readonly title: string;
   readonly description: string;
+  readonly descriptionParagraphs?: readonly string[];
   readonly gradient: string;
   readonly subjectGroups?: readonly SubjectGroup[];
 };
