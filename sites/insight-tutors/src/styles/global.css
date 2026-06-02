@@ -66,12 +66,12 @@ html, body, * {
   padding: 1.4px;
   background: linear-gradient(
     180deg,
-    rgba(0,0,0,0.18) 0%,
-    rgba(0,0,0,0.06) 20%,
+    rgba(0,0,0,0.28) 0%,
+    rgba(0,0,0,0.12) 20%,
     rgba(0,0,0,0) 40%,
     rgba(0,0,0,0) 60%,
-    rgba(0,0,0,0.06) 80%,
-    rgba(0,0,0,0.18) 100%
+    rgba(0,0,0,0.12) 80%,
+    rgba(0,0,0,0.28) 100%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;

@@ -105,7 +105,7 @@ export default function Nav({ variant = "page" }: Props) {
           <div className="ml-auto shrink-0 pr-1 min-[400px]:pr-4">
             <a
               href={bookHref}
-              className="insight-cta-coral hidden lg:flex items-center justify-center px-6 text-sm font-medium whitespace-nowrap transition-opacity hover:opacity-90 active:scale-[0.98]"
+              className="liquid-glass-light hidden lg:flex items-center justify-center px-6 text-sm ring-1 ring-black/30 whitespace-nowrap transition-opacity hover:opacity-75 active:scale-[0.98]"
               style={{ height: "47px", borderRadius: "100px" }}
             >
               Book a free class
@@ -139,7 +139,7 @@ export default function Nav({ variant = "page" }: Props) {
             <a
               href={bookHref}
               onClick={closeMenu}
-              className="insight-cta-coral mt-6 flex w-full items-center justify-center rounded-full py-3.5 text-sm font-medium transition-opacity hover:opacity-90 active:scale-[0.98]"
+              className="liquid-glass-light mt-6 flex w-full items-center justify-center rounded-full py-3.5 text-sm ring-1 ring-black/30 transition-opacity hover:opacity-75 active:scale-[0.98]"
             >
               Book a free class
             </a>
