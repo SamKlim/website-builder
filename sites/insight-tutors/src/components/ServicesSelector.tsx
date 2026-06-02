@@ -27,7 +27,10 @@ const SERVICES: readonly ServiceItem[] = [
   },
   {
     title: "Our Locations",
-    description: `Online and in the inner north and east of Melbourne: ${formatSuburbList(TUTORING_SUBURBS)}. We believe in-person works best, but know it can be hard every week, which is why we offer a mix of the two, or completely online.`,
+    description: `Online and in the inner north and east of Melbourne: ${formatSuburbList(TUTORING_SUBURBS)}.`,
+    descriptionParagraphs: [
+      "We believe in-person works best, but know it can be hard every week, which is why we offer a mix of the two, or completely online.",
+    ],
     gradient: "radial-gradient(ellipse at 24% 58%, rgba(108,158,102,0.92) 0%, transparent 48%), radial-gradient(ellipse at 74% 26%, rgba(215,138,82,0.85) 0%, transparent 48%), radial-gradient(ellipse at 62% 80%, rgba(145,195,135,0.65) 0%, transparent 44%), radial-gradient(ellipse at 14% 16%, rgba(242,185,118,0.52) 0%, transparent 42%), #E2EEDC",
   },
   {
@@ -56,6 +59,11 @@ function ServiceDetail({ service, compact = false }: { service: ServiceItem; com
         {!compact && <h3 className="font-sans text-2xl font-medium text-[#1A1615]">{service.title}</h3>}
         <div className="mt-2 h-px w-8 bg-[#8EAF8A]" />
         <p className="mt-3 text-base leading-relaxed text-[#555551]">{service.description}</p>
+        {service.descriptionParagraphs?.map((paragraph) => (
+          <p key={paragraph} className="mt-3 text-base leading-relaxed text-[#555551]">
+            {paragraph}
+          </p>
+        ))}
         {service.subjectGroups && (
           <div className="mt-3 space-y-3">
             {service.subjectGroups.map((group) => (
