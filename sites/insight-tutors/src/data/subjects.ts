@@ -60,14 +60,14 @@ export const SUBJECT_PAGES: SubjectPage[] = [
       "Maths tutor in Ivanhoe, Heidelberg, Northcote, Bundoora, Viewbank, Fairfield, Preston, Rosanna, Hawthorn, and surrounding suburbs. VCE Methods, Specialist, and General Maths. In-person and online.",
     headline: "VCE Maths Tutoring in Melbourne",
     subheadline:
-      "One-on-one support from tutors who are in the top 2% of the state, covering every VCE maths subject and Years 1–10.",
+      "One-on-one support from tutors who are in the top 2% of the state, covering every VCE maths subject and Years 1-10.",
     tutorCategory: "math",
     showExamVaultDifference: true,
     coverItems: [
       {
-        title: "Years 1–10 Mathematics",
+        title: "Years 1-10 Mathematics",
         description:
-          "Every year of maths builds on the last. It's the same topics, just harder and harder. When the basics aren't solid, students fall behind and the stress compounds year on year. We help Years 1–10 students master those foundations so they stay confident and keep up as school gets harder.",
+          "Every year of maths builds on the last. It's the same topics, just harder and harder. When the basics aren't solid, students fall behind and the stress compounds year on year. We help Years 1-10 students master those foundations so they stay confident and keep up as school gets harder.",
         gradient: MATHS_GRADIENTS.years110,
         topics: ["Number & algebra", "Measurement & geometry", "Problem-solving strategies", "Building blocks for VCE"],
       },
@@ -102,11 +102,11 @@ export const SUBJECT_PAGES: SubjectPage[] = [
       "English tutor in Ivanhoe, Heidelberg, Northcote, Bundoora, Viewbank, Fairfield, Preston, Rosanna, Hawthorn, and surrounding suburbs. VCE English, Literature, and English Language. In-person and online.",
     headline: "VCE English Tutoring in Melbourne",
     subheadline:
-      "One-on-one support from tutors who are in the top 2% of the state, covering every VCE English subject and Years 7–10.",
+      "One-on-one support from tutors who are in the top 2% of the state, covering every VCE English subject and Years 7-10.",
     tutorCategory: "english",
     coverItems: [
       {
-        title: "Years 7–10 English",
+        title: "Years 7-10 English",
         description:
           "Building strong reading comprehension and writing skills early makes senior English significantly more manageable. We work on the foundations that matter.",
         gradient: ENGLISH_GRADIENTS.years710,

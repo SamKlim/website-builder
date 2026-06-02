@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import { InsightTutorsPage } from "./pages/InsightTutorsPage";
+import { ShowcaseIndexPage } from "./pages/ShowcaseIndexPage";
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<InsightTutorsPage />} />
+      <Route path="/" element={<ShowcaseIndexPage />} />
     </Routes>
   );
 }

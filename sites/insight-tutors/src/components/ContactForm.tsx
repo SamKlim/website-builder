@@ -6,8 +6,8 @@ type FormStep = "contact" | "q2" | "done";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"] as const;
 const WEEKEND_DAYS = ["Sat", "Sun"] as const;
-const WEEKDAY_TIMES = ["4:00–5:00", "5:00–6:00", "6:00–7:00", "7:00–8:00"] as const;
-const WEEKEND_TIMES = ["9:00–10:00", "10:00–11:00", "11:00–12:00"] as const;
+const WEEKDAY_TIMES = ["4:00-5:00", "5:00-6:00", "6:00-7:00", "7:00-8:00"] as const;
+const WEEKEND_TIMES = ["9:00-10:00", "10:00-11:00", "11:00-12:00"] as const;
 
 const GRADES = [
   "Year 1","Year 2","Year 3","Year 4","Year 5","Year 6",
@@ -28,6 +28,9 @@ const TUTOR_PREFERENCE_OPTIONS: { value: TutorPreference; label: string }[] = [
 ];
 
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
+const CTA_BUTTON =
+  "insight-cta-coral mt-2 w-full rounded-full px-6 py-3.5 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40";
 
 function getSubjectsForGrade(grade: string): readonly string[] {
   const yearNum = parseInt(grade.replace("Year ", ""), 10);
@@ -86,7 +89,11 @@ function SlotGrid({
   );
 }
 
-export default function ContactForm() {
+type ContactFormProps = {
+  hideHeading?: boolean;
+};
+
+export default function ContactForm({ hideHeading = false }: ContactFormProps) {
   const [formStep, setFormStep] = useState<FormStep>("contact");
   const [name, setName] = useState("");
   const [studentName, setStudentName] = useState("");
@@ -174,7 +181,7 @@ export default function ContactForm() {
         <p className="mb-4 text-xs font-medium uppercase tracking-widest text-[#888884]">Step 2 of 2</p>
       )}
 
-      {formStep !== "done" && (
+      {formStep !== "done" && !hideHeading && (
         <h2 className="insight-heading mb-8 text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">
           Request your free tutoring session
         </h2>
@@ -208,8 +215,7 @@ export default function ContactForm() {
             </label>
             {step1Error && <p className="text-sm text-red-500">{step1Error}</p>}
             {submitError && <p className="text-sm text-red-500">{submitError}</p>}
-            <button type="submit" disabled={isSubmitting}
-              className="mt-2 rounded-full bg-[#1A1615] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40">
+            <button type="submit" disabled={isSubmitting} className={CTA_BUTTON}>
               {isSubmitting ? "Sending…" : "Continue"}
             </button>
           </div>
@@ -311,7 +317,7 @@ export default function ContactForm() {
             <button type="button"
               disabled={isSubmitting || (referralSource === "Other" && referralOther.trim() === "")}
               onClick={() => { void handleSubmit(); }}
-              className="mt-2 w-full rounded-full bg-[#1A1615] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-80 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40">
+              className={CTA_BUTTON}>
               {isSubmitting ? "Sending…" : "Submit"}
             </button>
           </div>

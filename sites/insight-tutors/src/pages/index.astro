@@ -29,7 +29,7 @@ const localBusinessSchema = {
   "url": SITE_URL,
   "description": "Expert one-on-one VCE Maths and English tutoring in Melbourne. Female-led team with ATARs of 96+.",
   "areaServed": "Melbourne, Victoria, Australia",
-  "priceRange": "$75–$95",
+  "priceRange": "$75 to $95",
   "sameAs": [],
 };
 ---
@@ -43,7 +43,7 @@ const localBusinessSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   </Fragment>
 
-  <Nav variant="home" client:load />
+  <Nav client:load />
 
   <main class="pt-[87px]">
     <!-- Hero -->
@@ -56,7 +56,7 @@ const localBusinessSchema = {
           We are a woman-led group of top academic achievers with ATARs of 96+.
         </p>
         <div class="mt-8 flex items-center justify-center">
-          <a href="#contact" class="liquid-glass-light rounded-full px-7 py-3.5 text-sm ring-1 ring-black/20 transition-opacity hover:opacity-75 active:scale-[0.98]">
+          <a href="#contact" class="insight-cta-coral rounded-full px-7 py-3.5 active:scale-[0.98]">
             Book a free class
           </a>
         </div>
@@ -72,7 +72,7 @@ const localBusinessSchema = {
                 <p class="text-[13px] font-semibold text-white" style="text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 2px rgba(0,0,0,0.5)">
                   {tutor.name}
                 </p>
-                {tutor.atar !== "TBC" && (
+                {tutor.atar !== "TBC" && tutor.name !== "Zara" && (
                   <p class="text-[11px] text-white/90" style="text-shadow: 0 1px 4px rgba(0,0,0,0.6)">
                     ATAR {tutor.atar.split("·")[0].trim()}
                   </p>
@@ -208,7 +208,7 @@ const localBusinessSchema = {
   </main>
 
   <footer class="bg-[#1A1615]">
-    <div class="mx-auto w-full max-w-6xl px-5 md:px-16 py-8">
+    <div class="w-full px-5 md:px-16 py-8 text-left">
       <p class="text-base font-semibold text-white">Insight Tutors</p>
       <ul class="mt-3 flex flex-col gap-2 text-sm text-white/60">
         <li><a href="#about" class="transition-colors hover:text-white">Our Story</a></li>

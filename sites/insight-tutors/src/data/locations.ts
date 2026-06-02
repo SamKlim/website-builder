@@ -93,6 +93,6 @@ export function buildLocalBusinessSchema(
         name: "Victoria",
       },
     })),
-    priceRange: "$75–$95",
+    priceRange: "$75 to $95",
   };
 }

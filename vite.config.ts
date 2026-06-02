@@ -10,7 +10,6 @@ export default defineConfig({
         halo: "halo.html",
         maxReed: "max-reed.html",
         maxReedV2: "max-reed-v2.html",
-        insightTutors: "insight-tutors.html",
       },
     },
   },

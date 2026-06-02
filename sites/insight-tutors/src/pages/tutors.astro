@@ -12,7 +12,7 @@ const reviewsMarquee = [...REVIEWS, ...REVIEWS];
 
 <BaseLayout
   title="Meet Our Tutors | Insight Tutors"
-  description="Meet the Insight Tutors team. VCE Maths and English tutors with ATARs of 94–99.6. Scientists, engineers, and subject specialists based in Melbourne."
+  description="Meet the Insight Tutors team. VCE Maths and English tutors with ATARs of 94-99.6. Scientists, engineers, and subject specialists based in Melbourne."
   canonicalUrl={`${SITE_URL}/tutors`}
 >
   <Nav client:load />
@@ -21,15 +21,14 @@ const reviewsMarquee = [...REVIEWS, ...REVIEWS];
     <section class="mx-auto w-full max-w-6xl px-5 md:px-16 py-16 md:py-24">
       <h1 class="insight-heading text-4xl font-medium leading-[1.05] tracking-tight md:text-5xl">Meet Your Tutors</h1>
       <p class="mt-4 max-w-2xl text-xl leading-relaxed text-[#6B6867]">
-        Every tutor on our team scored in the top 2–5% of Australia. Scientists, engineers, and subject specialists, each passionate about teaching and genuinely invested in their students.
+        Every tutor on our team scored in the top 2-5% of Australia. Scientists, engineers, and subject specialists, each passionate about teaching and genuinely invested in their students.
       </p>
 
       <!-- Stats row -->
-      <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
         {[
           { value: "300+", label: "Students tutored" },
           { value: "40 yrs", label: "Combined experience" },
-          { value: "98", label: "Average ATAR" },
           { value: "99", label: "Median ATAR" },
         ].map((stat) => (
           <div class="rounded-2xl border border-[#E2DFDB] bg-white px-6 py-5">
@@ -39,7 +38,7 @@ const reviewsMarquee = [...REVIEWS, ...REVIEWS];
         ))}
       </div>
 
-      <TutorGrid tutors={TUTORS} showToggle={false} showAllCategories client:load expandAll />
+      <TutorGrid tutors={TUTORS} client:load expandAll />
     </section>
 
     <!-- Reviews -->
@@ -80,7 +79,7 @@ const reviewsMarquee = [...REVIEWS, ...REVIEWS];
   </main>
 
   <footer class="bg-[#1A1615]">
-    <div class="mx-auto w-full max-w-6xl px-5 md:px-16 py-8">
+    <div class="w-full px-5 md:px-16 py-8 text-left">
       <p class="text-base font-semibold text-white">Insight Tutors</p>
       <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60">
         <li><a href="/" class="transition-colors hover:text-white">Home</a></li>

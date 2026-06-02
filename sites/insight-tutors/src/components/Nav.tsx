@@ -13,6 +13,7 @@ const PAGE_NAV_LINKS = [
   { label: "Our Story", href: "/#about" },
   { label: "Our Tutors", href: "/tutors" },
   { label: "Subjects", href: "/subjects" },
+  { label: "Reviews", href: "/#reviews" },
   { label: "Pricing", href: "/pricing" },
 ];
 
@@ -27,7 +28,7 @@ interface Props {
 export default function Nav({ variant = "page" }: Props) {
   const isHome = variant === "home";
   const navLinks = isHome ? HOME_NAV_LINKS : PAGE_NAV_LINKS;
-  const bookHref = "#contact";
+  const bookHref = isHome ? "#contact" : "/#contact";
   const [scrolled, setScrolled] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -104,7 +105,7 @@ export default function Nav({ variant = "page" }: Props) {
           <div className="ml-auto shrink-0 pr-1 min-[400px]:pr-4">
             <a
               href={bookHref}
-              className="liquid-glass-light hidden lg:flex items-center justify-center px-6 text-sm ring-1 ring-black/20 whitespace-nowrap transition-opacity hover:opacity-75 active:scale-[0.98]"
+              className="insight-cta-coral hidden lg:flex items-center justify-center px-6 text-sm font-medium whitespace-nowrap transition-opacity hover:opacity-90 active:scale-[0.98]"
               style={{ height: "47px", borderRadius: "100px" }}
             >
               Book a free class
@@ -138,7 +139,7 @@ export default function Nav({ variant = "page" }: Props) {
             <a
               href={bookHref}
               onClick={closeMenu}
-              className="liquid-glass-light mt-6 flex w-full items-center justify-center rounded-full py-3.5 text-sm ring-1 ring-black/20 transition-opacity hover:opacity-75 active:scale-[0.98]"
+              className="insight-cta-coral mt-6 flex w-full items-center justify-center rounded-full py-3.5 text-sm font-medium transition-opacity hover:opacity-90 active:scale-[0.98]"
             >
               Book a free class
             </a>

@@ -18,12 +18,12 @@ type ServiceItem = {
 const SERVICES: readonly ServiceItem[] = [
   {
     title: "Our Subjects",
-    description: "We specialise in VCE Mathematics and VCE English, while also supporting students across Years 1–10 to build strong foundations.",
+    description: "We specialise in VCE Mathematics and VCE English, while also supporting students across Years 1-10 to build strong foundations.",
     gradient: "radial-gradient(ellipse at 18% 38%, rgba(215,108,82,0.90) 0%, transparent 48%), radial-gradient(ellipse at 76% 60%, rgba(72,162,152,0.85) 0%, transparent 48%), radial-gradient(ellipse at 52% 14%, rgba(238,188,148,0.68) 0%, transparent 44%), radial-gradient(ellipse at 22% 80%, rgba(105,185,172,0.52) 0%, transparent 42%), #F2E8E2",
     subjectGroups: [
       { label: "VCE Mathematics", subjects: ["General Mathematics", "Mathematical Methods"] },
       { label: "VCE English", subjects: ["English", "English Language", "English Literature"] },
-      { label: "Years 1–10", subjects: ["Mathematics", "English"] },
+      { label: "Years 1-10", subjects: ["Mathematics", "English"] },
     ],
   },
   {
@@ -36,7 +36,7 @@ const SERVICES: readonly ServiceItem[] = [
   },
   {
     title: "Our Prices",
-    description: "Sessions priced between $75 – $95.",
+    description: "Sessions priced between $75 and $95.",
     gradient: "radial-gradient(ellipse at 22% 44%, rgba(218,168,82,0.92) 0%, transparent 48%), radial-gradient(ellipse at 72% 56%, rgba(145,112,202,0.82) 0%, transparent 48%), radial-gradient(ellipse at 56% 12%, rgba(245,218,128,0.68) 0%, transparent 44%), radial-gradient(ellipse at 16% 80%, rgba(172,145,222,0.52) 0%, transparent 42%), #F0E8D2",
   },
   {
