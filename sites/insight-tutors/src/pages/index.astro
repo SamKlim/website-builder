@@ -118,6 +118,33 @@ const localBusinessSchema = {
       </div>
     </section>
 
+    <!-- Reviews -->
+    <section id="reviews" class="mx-auto w-full max-w-6xl px-5 md:px-16 py-16 md:py-20">
+      <h2 class="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What Students Say</h2>
+      <p class="mx-auto mt-4 max-w-lg text-center text-xl leading-relaxed text-[#6B6867]">
+        Real experiences from students who've grown through one-on-one support.
+      </p>
+      <div class="mt-10 -mx-5 md:-mx-16 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+        <div class="flex w-max gap-4 animate-marquee-reviews">
+          {reviewsMarquee.map((review, i) => (
+            <article key={i} class="liquid-glass-pink flex h-[290px] w-[266px] shrink-0 flex-col justify-between rounded-2xl p-4 ring-1 ring-[#F0744A]/15">
+              <div>
+                <div class="mb-4 flex gap-1.5">
+                  {Array.from({ length: 5 }).map((_, si) => (
+                    <svg key={si} width="22" height="22" viewBox="0 0 24 24" fill="#F0744A" stroke="#F0744A" stroke-width="1.5" class="text-[#F0744A]">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+                <p class="text-[15px] leading-relaxed text-[#777]">{review.quote}</p>
+              </div>
+              <p class="text-[20px] font-semibold text-black">{review.author}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- Our Difference -->
     <section id="difference" class="mx-auto w-full max-w-6xl px-5 py-16 md:py-20">
       <h2 class="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">Our Difference</h2>
@@ -168,33 +195,6 @@ const localBusinessSchema = {
             </div>
             <img src="/insight-tutors/example-images/exam-vault-questions.png" alt="Exam Vault, past exam questions organised by topic and difficulty" class="block w-full rounded-b-xl" style="transform:translateZ(0.1px)" />
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Reviews -->
-    <section id="reviews" class="mx-auto w-full max-w-6xl px-5 md:px-16 py-16 md:py-20">
-      <h2 class="insight-heading text-center text-3xl font-medium leading-[1.05] tracking-tight md:text-4xl">What Students Say</h2>
-      <p class="mx-auto mt-4 max-w-lg text-center text-xl leading-relaxed text-[#6B6867]">
-        Real experiences from students who've grown through one-on-one support.
-      </p>
-      <div class="mt-10 -mx-5 md:-mx-16 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-        <div class="flex w-max gap-4 animate-marquee-reviews">
-          {reviewsMarquee.map((review, i) => (
-            <article key={i} class="liquid-glass-pink flex h-[290px] w-[266px] shrink-0 flex-col justify-between rounded-2xl p-4 ring-1 ring-[#F0744A]/15">
-              <div>
-                <div class="mb-4 flex gap-1.5">
-                  {Array.from({ length: 5 }).map((_, si) => (
-                    <svg key={si} width="22" height="22" viewBox="0 0 24 24" fill="#F0744A" stroke="#F0744A" stroke-width="1.5" class="text-[#F0744A]">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  ))}
-                </div>
-                <p class="text-[15px] leading-relaxed text-[#777]">{review.quote}</p>
-              </div>
-              <p class="text-[20px] font-semibold text-black">{review.author}</p>
-            </article>
-          ))}
         </div>
       </div>
     </section>
