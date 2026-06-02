@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 const HOME_NAV_LINKS = [
   { label: "Our Story", href: "#about" },
-  { label: "Our Tutors", href: "#tutors" },
+  { label: "Our Tutors", href: "/tutors" },
   { label: "Subjects", href: "/subjects" },
   { label: "Our Difference", href: "#difference" },
   { label: "Reviews", href: "#reviews" },

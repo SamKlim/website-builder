@@ -6,13 +6,23 @@ interface Props {
   tutors: Tutor[];
   defaultCategory?: TutorCategory;
   showToggle?: boolean;
+  showAllCategories?: boolean;
+  expandAll?: boolean;
 }
 
-export default function TutorGrid({ tutors, defaultCategory = "math", showToggle = true }: Props) {
+export default function TutorGrid({
+  tutors,
+  defaultCategory = "math",
+  showToggle = true,
+  showAllCategories = false,
+  expandAll = false,
+}: Props) {
   const [activeCategory, setActiveCategory] = useState<TutorCategory>(defaultCategory);
 
   const category = showToggle ? activeCategory : defaultCategory;
-  const filtered = tutors.filter((t) => t.category === category);
+  const filtered = showAllCategories
+    ? tutors
+    : tutors.filter((t) => t.category === category);
 
   return (
     <>
@@ -46,7 +56,7 @@ export default function TutorGrid({ tutors, defaultCategory = "math", showToggle
 
       <div className={`grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 ${showToggle ? "mt-10" : "mt-8"}`}>
         {filtered.map((tutor, i) => (
-          <TutorCard key={tutor.name} tutor={tutor} index={i} />
+          <TutorCard key={tutor.name} tutor={tutor} index={i} defaultExpanded={expandAll} />
         ))}
       </div>
     </>

@@ -2,8 +2,20 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import { useState } from "react";
 import type { Tutor } from "../data/tutors";
 
-export default function TutorCard({ tutor, index }: { tutor: Tutor; index: number }) {
-  const [expanded, setExpanded] = useState(false);
+function formatBio(bio: string): string {
+  return bio.replace(/\s*—\s*/g, ", ").replace(/—/g, ", ").replace(/\n\n/g, " ");
+}
+
+export default function TutorCard({
+  tutor,
+  index,
+  defaultExpanded = false,
+}: {
+  tutor: Tutor;
+  index: number;
+  defaultExpanded?: boolean;
+}) {
+  const [expanded, setExpanded] = useState(defaultExpanded);
 
   const toggle = () => setExpanded((e) => !e);
 
@@ -41,7 +53,7 @@ export default function TutorCard({ tutor, index }: { tutor: Tutor; index: numbe
       <div className="mt-3 flex flex-col rounded-xl p-2">
         <p className="font-sans text-lg font-semibold text-[#1A1615]">Bio</p>
         <p className={`mt-2 text-sm font-normal leading-relaxed text-[#555551] ${expanded ? "" : "line-clamp-6"}`}>
-          {tutor.bio.replace(/\n\n/g, " ")}
+          {formatBio(tutor.bio)}
         </p>
         <span className="mt-3 flex items-center gap-1.5 text-sm font-medium text-[#F0744A]">
           {expanded ? "Close" : `Learn more about ${tutor.name}`}
