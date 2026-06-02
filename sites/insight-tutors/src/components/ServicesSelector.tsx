@@ -35,6 +35,11 @@ const SERVICES: readonly ServiceItem[] = [
     description: "Sessions priced between $75 – $95.",
     gradient: "radial-gradient(ellipse at 22% 44%, rgba(218,168,82,0.92) 0%, transparent 48%), radial-gradient(ellipse at 72% 56%, rgba(145,112,202,0.82) 0%, transparent 48%), radial-gradient(ellipse at 56% 12%, rgba(245,218,128,0.68) 0%, transparent 44%), radial-gradient(ellipse at 16% 80%, rgba(172,145,222,0.52) 0%, transparent 42%), #F0E8D2",
   },
+  {
+    title: "Our Experience",
+    description: "300+ students tutored over 8 years combined. All our tutors are in the top 2% of Australia (98+ ATAR).",
+    gradient: "radial-gradient(ellipse at 35% 52%, rgba(82,145,92,0.92) 0%, transparent 48%), radial-gradient(ellipse at 74% 30%, rgba(218,132,102,0.85) 0%, transparent 48%), radial-gradient(ellipse at 18% 20%, rgba(128,188,128,0.68) 0%, transparent 44%), radial-gradient(ellipse at 70% 78%, rgba(242,172,142,0.55) 0%, transparent 42%), #D8ECD2",
+  },
 ] as const;
 
 function padIndex(i: number): string {
