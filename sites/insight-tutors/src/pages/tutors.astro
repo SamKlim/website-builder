@@ -39,7 +39,7 @@ const reviewsMarquee = [...REVIEWS, ...REVIEWS];
         ))}
       </div>
 
-      <TutorGrid tutors={TUTORS} client:load />
+      <TutorGrid tutors={TUTORS} showToggle={false} showAllCategories client:load expandAll />
     </section>
 
     <!-- Reviews -->
