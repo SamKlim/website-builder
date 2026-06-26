@@ -2,6 +2,9 @@ node_modules/
 dist/
 *.tsbuildinfo
 .playwright-mcp/
+.env
+.env.local
+.env.*.local
 
 # Root-level dev screenshots and test files
 axion-colors.jpeg
