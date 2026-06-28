@@ -1,30 +1,25 @@
-import type { APIRoute } from 'astro';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 
 const TO_EMAIL = 'samanthaklimovski@gmail.com';
 const FROM_EMAIL = 'onboarding@resend.dev';
 
-export const POST: APIRoute = async ({ request }) => {
-  const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
-  let body: Record<string, string>;
-  try {
-    const text = await request.text();
-    body = JSON.parse(text) as Record<string, string>;
-  } catch {
-    return new Response(JSON.stringify({ success: false, message: 'Invalid request body.' }), { status: 400 });
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false });
   }
 
-  const { type, name, student_name, mobile, email, grade, subjects, tutor_preference, availability, referral_source } = body;
+  const body = req.body as Record<string, string>;
+  const { type, name, student_name, mobile, email, grade, subjects, tutor_preference, availability, referral_source } = body ?? {};
 
   if (!name?.trim() || !student_name?.trim() || !mobile?.trim()) {
-    return new Response(JSON.stringify({ success: false, message: 'Missing required fields.' }), { status: 400 });
+    return res.status(400).json({ success: false, message: 'Missing required fields.' });
   }
 
   const isPartial = type === 'partial';
   const subject = isPartial ? 'New enquiry: contact details' : 'New enquiry: full details';
 
-  const rows = isPartial
+  const rows: [string, string][] = isPartial
     ? [
         ['Parent name', name],
         ['Student name', student_name],
@@ -53,16 +48,12 @@ export const POST: APIRoute = async ({ request }) => {
     </table>
   `;
 
-  const { error } = await resend.emails.send({
-    from: FROM_EMAIL,
-    to: TO_EMAIL,
-    subject,
-    html,
-  });
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const { error } = await resend.emails.send({ from: FROM_EMAIL, to: TO_EMAIL, subject, html });
 
   if (error) {
-    return new Response(JSON.stringify({ success: false, message: 'Failed to send email.' }), { status: 500 });
+    return res.status(500).json({ success: false, message: 'Failed to send email.' });
   }
 
-  return new Response(JSON.stringify({ success: true }), { status: 200 });
-};
+  return res.status(200).json({ success: true });
+}
