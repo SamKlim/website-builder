@@ -91,9 +91,10 @@ function SlotGrid({
 
 type ContactFormProps = {
   hideHeading?: boolean;
+  accessKey: string;
 };
 
-export default function ContactForm({ hideHeading = false }: ContactFormProps) {
+export default function ContactForm({ hideHeading = false, accessKey }: ContactFormProps) {
   const [formStep, setFormStep] = useState<FormStep>("contact");
   const [name, setName] = useState("");
   const [studentName, setStudentName] = useState("");
@@ -139,7 +140,7 @@ export default function ContactForm({ hideHeading = false }: ContactFormProps) {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY as string,
+          access_key: accessKey,
           subject: "New enquiry: contact details only",
           from_name: name, name, student_name: studentName,
           mobile, email: email || "(not provided)",
@@ -159,7 +160,7 @@ export default function ContactForm({ hideHeading = false }: ContactFormProps) {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY as string,
+          access_key: accessKey,
           subject: "Complete enquiry: all details",
           from_name: name, name, student_name: studentName, mobile,
           email: email || "(not provided)", grade,

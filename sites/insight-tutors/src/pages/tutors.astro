@@ -73,7 +73,7 @@ const reviewsMarquee = [...REVIEWS, ...REVIEWS];
     <!-- Contact -->
     <section id="contact" class="bg-[#F4F4F2]">
       <div class="mx-auto flex w-full max-w-2xl flex-col items-center px-5 py-16 md:py-20">
-        <ContactForm client:load />
+        <ContactForm client:load accessKey={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY} />
       </div>
     </section>
   </main>
