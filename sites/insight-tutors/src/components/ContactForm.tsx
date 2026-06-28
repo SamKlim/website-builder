@@ -140,8 +140,8 @@ export default function ContactForm({ hideHeading = false }: ContactFormProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: "partial", name, student_name: studentName, mobile, email }),
       });
-      const data = await res.json() as { success: boolean };
-      if (data.success) { setFormStep("q2"); } else { setSubmitError("Something went wrong. Please try again."); }
+      const data = await res.json() as { success: boolean; message?: string };
+      if (data.success) { setFormStep("q2"); } else { setSubmitError(data.message ?? "Something went wrong. Please try again."); }
     } catch { setSubmitError("Something went wrong. Please try again."); }
     finally { setIsSubmitting(false); }
   };
@@ -167,8 +167,8 @@ export default function ContactForm({ hideHeading = false }: ContactFormProps) {
           referral_source: referralSource === "Other" ? `Other: ${referralOther}` : referralSource || "Not provided",
         }),
       });
-      const data = await res.json() as { success: boolean };
-      if (data.success) { setFormStep("done"); } else { setSubmitError("Something went wrong. Please try again."); }
+      const data = await res.json() as { success: boolean; message?: string };
+      if (data.success) { setFormStep("done"); } else { setSubmitError(data.message ?? "Something went wrong. Please try again."); }
     } catch { setSubmitError("Something went wrong. Please try again."); }
     finally { setIsSubmitting(false); }
   };
