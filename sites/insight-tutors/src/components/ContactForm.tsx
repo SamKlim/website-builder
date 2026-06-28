@@ -27,7 +27,7 @@ const TUTOR_PREFERENCE_OPTIONS: { value: TutorPreference; label: string }[] = [
   { value: "both", label: "No preference" },
 ];
 
-const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const ENQUIRY_ENDPOINT = "/api/enquiry";
 
 const CTA_BUTTON =
   "insight-cta-coral mt-2 w-full rounded-full px-6 py-3.5 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40";
@@ -91,10 +91,9 @@ function SlotGrid({
 
 type ContactFormProps = {
   hideHeading?: boolean;
-  accessKey: string;
 };
 
-export default function ContactForm({ hideHeading = false, accessKey }: ContactFormProps) {
+export default function ContactForm({ hideHeading = false }: ContactFormProps) {
   const [formStep, setFormStep] = useState<FormStep>("contact");
   const [name, setName] = useState("");
   const [studentName, setStudentName] = useState("");
@@ -136,16 +135,10 @@ export default function ContactForm({ hideHeading = false, accessKey }: ContactF
     setIsSubmitting(true);
     setSubmitError("");
     try {
-      const res = await fetch(WEB3FORMS_ENDPOINT, {
+      const res = await fetch(ENQUIRY_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: accessKey,
-          botcheck: "",
-          subject: "New enquiry: contact details only",
-          from_name: name, name, student_name: studentName,
-          mobile, email: email || "(not provided)",
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "partial", name, student_name: studentName, mobile, email }),
       });
       const data = await res.json() as { success: boolean };
       if (data.success) { setFormStep("q2"); } else { setSubmitError("Something went wrong. Please try again."); }
@@ -157,19 +150,17 @@ export default function ContactForm({ hideHeading = false, accessKey }: ContactF
     setIsSubmitting(true);
     setSubmitError("");
     try {
-      const res = await fetch(WEB3FORMS_ENDPOINT, {
+      const res = await fetch(ENQUIRY_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: accessKey,
-          botcheck: "",
-          subject: "Complete enquiry: all details",
-          from_name: name, name, student_name: studentName, mobile,
-          email: email || "(not provided)", grade,
-          subjects: selectedSubjects.size > 0 ? Array.from(selectedSubjects).join(", ") : "(none selected)",
+          type: "complete",
+          name, student_name: studentName, mobile, email,
+          grade,
+          subjects: selectedSubjects.size > 0 ? Array.from(selectedSubjects).join(", ") : "Not provided",
           tutor_preference: tutorPreference ?? "No preference",
-          availability: selectedSlots.size > 0 ? Array.from(selectedSlots).join(", ") : "(none selected)",
-          referral_source: referralSource === "Other" ? `Other: ${referralOther}` : referralSource || "(not provided)",
+          availability: selectedSlots.size > 0 ? Array.from(selectedSlots).join(", ") : "Not provided",
+          referral_source: referralSource === "Other" ? `Other: ${referralOther}` : referralSource || "Not provided",
         }),
       });
       const data = await res.json() as { success: boolean };
@@ -196,7 +187,6 @@ export default function ContactForm({ hideHeading = false, accessKey }: ContactF
           onSubmit={(e) => { e.preventDefault(); void handleContinue(); }}
         >
           <div className="grid gap-4">
-            <input type="checkbox" name="botcheck" style={{ display: "none" }} />
             <label className="text-sm font-medium text-[#1A1615]">
               Your name*
               <input value={name} onChange={(e) => setName(e.target.value)}
