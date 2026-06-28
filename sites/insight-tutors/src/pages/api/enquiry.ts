@@ -9,7 +9,8 @@ export const POST: APIRoute = async ({ request }) => {
 
   let body: Record<string, string>;
   try {
-    body = await request.json() as Record<string, string>;
+    const text = await request.text();
+    body = JSON.parse(text) as Record<string, string>;
   } catch {
     return new Response(JSON.stringify({ success: false, message: 'Invalid request body.' }), { status: 400 });
   }

@@ -147,6 +147,10 @@ export default function ContactForm({ hideHeading = false }: ContactFormProps) {
   };
 
   const handleSubmit = async () => {
+    if (!grade) {
+      setSubmitError("Please select a year level.");
+      return;
+    }
     setIsSubmitting(true);
     setSubmitError("");
     try {
