@@ -141,6 +141,7 @@ export default function ContactForm({ hideHeading = false, accessKey }: ContactF
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: accessKey,
+          botcheck: "",
           subject: "New enquiry: contact details only",
           from_name: name, name, student_name: studentName,
           mobile, email: email || "(not provided)",
@@ -161,6 +162,7 @@ export default function ContactForm({ hideHeading = false, accessKey }: ContactF
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: accessKey,
+          botcheck: "",
           subject: "Complete enquiry: all details",
           from_name: name, name, student_name: studentName, mobile,
           email: email || "(not provided)", grade,
@@ -194,6 +196,7 @@ export default function ContactForm({ hideHeading = false, accessKey }: ContactF
           onSubmit={(e) => { e.preventDefault(); void handleContinue(); }}
         >
           <div className="grid gap-4">
+            <input type="checkbox" name="botcheck" style={{ display: "none" }} />
             <label className="text-sm font-medium text-[#1A1615]">
               Your name*
               <input value={name} onChange={(e) => setName(e.target.value)}
