@@ -52,7 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { error } = await resend.emails.send({ from: FROM_EMAIL, to: TO_EMAIL, subject, html });
 
   if (error) {
-    return res.status(500).json({ success: false, message: 'Failed to send email.' });
+    return res.status(500).json({ success: false, message: error.message, name: error.name });
   }
 
   return res.status(200).json({ success: true });
