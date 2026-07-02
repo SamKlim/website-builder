@@ -41,5 +41,9 @@ const siteName = 'Insight Tutors';
   </head>
   <body class="bg-[#F4F4F2] text-[#1A1615]">
     <slot />
+    <script>
+      import { inject } from '@vercel/analytics';
+      inject();
+    </script>
   </body>
 </html>

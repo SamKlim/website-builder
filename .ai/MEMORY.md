@@ -23,3 +23,5 @@ Decision log + shipped-features index. Not a session recap.
 [2026-05-28][shipped] Onboarding success overlay — loading hand, confetti, route to /topics without white flash.
 
 [2026-05-28][decision] Page gutters live in `lib/design-system/page-spacing.ts`, not `app/layout.tsx`. Left, right, and bottom padding share one value, 24px on mobile scaling to 60px on desktop.
+
+[2026-07-02][shipped] Insight Tutors: server-side API errors (api/enquiry.ts) email an alert to insighttutorstutoring@gmail.com via Resend, rate-limited to one per distinct error per 30 min (api/_lib/errorAlert.ts). Vercel Analytics added for visitor/referrer traffic (BaseLayout.astro) — view in Vercel dashboard, not email.

@@ -1,10 +1,20 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
+import { alertOnError } from './_lib/errorAlert';
 
 const TO_EMAIL = 'insighttutorstutoring@gmail.com';
 const FROM_EMAIL = 'onboarding@resend.dev';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  try {
+    return await handleEnquiry(req, res);
+  } catch (err) {
+    await alertOnError('api/enquiry', err);
+    return res.status(500).json({ success: false, message: 'Unexpected server error.' });
+  }
+}
+
+async function handleEnquiry(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false });
   }
@@ -52,6 +62,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { error } = await resend.emails.send({ from: FROM_EMAIL, to: TO_EMAIL, subject, html });
 
   if (error) {
+    await alertOnError('api/enquiry (resend)', new Error(error.message));
     return res.status(500).json({ success: false, message: error.message, name: error.name });
   }
 
