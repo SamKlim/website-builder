@@ -1,0 +1,20 @@
+{
+  "//": [
+    "Vercel runs api/ as raw Node ESM — it is not bundled by Vite the way src/ is.",
+    "The repo's root config extends Astro's preset, whose moduleResolution 'bundler'",
+    "permits extensionless relative imports. Node's ESM loader does not, so that",
+    "combination let a broken import reach production and crash the function at load.",
+    "'nodenext' here checks this directory against the rules it actually runs under."
+  ],
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["**/*.ts"]
+}

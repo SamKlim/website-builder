@@ -8,6 +8,11 @@ const TO_EMAIL = 'insighttutorstutoring@gmail.com';
 // 'Insight Tutors <enquiries@insighttutors.com.au>'.
 const FROM_EMAIL = 'onboarding@resend.dev';
 
+// Resend endpoint used only to confirm the API key is still accepted.
+// Reading domains sends no mail and costs nothing.
+const RESEND_PROBE_URL = 'https://api.resend.com/domains';
+const RESEND_PROBE_TIMEOUT_MS = 5000;
+
 /** Escapes user input before it is interpolated into the notification email's HTML. */
 function escapeHtml(value: string): string {
   return value
@@ -15,6 +20,51 @@ function escapeHtml(value: string): string {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+/**
+ * Liveness probe for an external monitor. Exercises everything a real enquiry
+ * depends on — the function loading, the route resolving, the Resend credential
+ * being valid — without emailing anyone.
+ *
+ * Distinguishes definite failures from transient ones on purpose. A rejected API
+ * key means real enquiries are failing right now and must raise an alarm. Resend
+ * merely being unreachable for five seconds must not, because a monitor that cries
+ * wolf gets muted, and a muted monitor is what cost nine weeks of enquiries.
+ */
+async function handleHealthcheck(body: Record<string, string>, res: VercelResponse) {
+  const expectedToken = process.env.HEALTHCHECK_TOKEN;
+  if (!expectedToken) {
+    console.error('[healthcheck] HEALTHCHECK_TOKEN is not configured');
+    return res.status(503).json({ success: false, check: 'token_missing' });
+  }
+  if (body.token !== expectedToken) {
+    return res.status(401).json({ success: false, check: 'token_invalid' });
+  }
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('[healthcheck] RESEND_API_KEY is not set');
+    return res.status(503).json({ success: false, check: 'resend_key_missing' });
+  }
+
+  try {
+    const probe = await fetch(RESEND_PROBE_URL, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+      signal: AbortSignal.timeout(RESEND_PROBE_TIMEOUT_MS),
+    });
+    if (probe.status === 401 || probe.status === 403) {
+      console.error('[healthcheck] Resend rejected the API key with', probe.status);
+      return res.status(503).json({ success: false, check: 'resend_key_rejected' });
+    }
+  } catch (error) {
+    // Could not reach Resend at all. The handler itself is healthy, so report
+    // success and let the 'degraded' marker carry the detail.
+    console.warn('[healthcheck] Resend unreachable (treated as transient):', error);
+    return res.status(200).json({ success: true, check: 'degraded' });
+  }
+
+  return res.status(200).json({ success: true, check: 'ok' });
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -32,8 +82,14 @@ async function handleEnquiry(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ success: false });
   }
 
-  const body = req.body as Record<string, string>;
-  const { type, name, student_name, mobile, email, grade, subjects, tutor_preference, availability, referral_source } = body ?? {};
+  const body = (req.body ?? {}) as Record<string, string>;
+
+  // Checked before field validation: a healthcheck carries no enquiry details.
+  if (body.type === 'healthcheck') {
+    return await handleHealthcheck(body, res);
+  }
+
+  const { type, name, student_name, mobile, email, grade, subjects, tutor_preference, availability, referral_source } = body;
 
   if (!name?.trim() || !student_name?.trim() || !mobile?.trim()) {
     return res.status(400).json({ success: false, message: 'Missing required fields.' });
