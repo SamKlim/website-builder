@@ -1,0 +1,70 @@
+---
+import { Mail, Phone, MapPin } from 'lucide-react';
+
+const NAV_LINKS = [
+  { label: 'Home', href: '/' },
+  { label: 'Our Story', href: '/#about' },
+  { label: 'Our Tutors', href: '/tutors' },
+  { label: 'Subjects', href: '/subjects' },
+  { label: 'Reviews', href: '/#reviews' },
+  { label: 'Pricing', href: '/pricing' },
+];
+
+const EMAIL = 'insighttutorstutoring@gmail.com';
+const PHONE_DISPLAY = '0426 719 991';
+const PHONE_HREF = 'tel:+61426719991';
+const ADDRESS = '275 Upper Heidelberg Rd, Ivanhoe VIC 3079';
+const MAPS_HREF = 'https://maps.google.com/?cid=13082586556427434583';
+---
+
+<footer class="bg-[#1A1615]">
+  <div class="w-full px-5 md:px-16 py-8 text-left">
+    <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+      <div>
+        <p class="text-base font-semibold text-white">Insight Tutors</p>
+        <ul class="mt-3 flex flex-col gap-2 text-sm text-white/60">
+          {NAV_LINKS.map((link) => (
+            <li>
+              <a href={link.href} class="transition-colors hover:text-white">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="md:text-right">
+        <p class="text-base font-semibold text-white">Contact Us</p>
+        <ul class="mt-3 flex flex-col gap-2 text-sm text-white/60">
+          <li>
+            <a
+              href={`mailto:${EMAIL}`}
+              class="flex items-center gap-2 transition-colors hover:text-white md:justify-end"
+            >
+              <Mail size={16} className="shrink-0" aria-hidden="true" />
+              <span>{EMAIL}</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={PHONE_HREF}
+              class="flex items-center gap-2 transition-colors hover:text-white md:justify-end"
+            >
+              <Phone size={16} className="shrink-0" aria-hidden="true" />
+              <span>{PHONE_DISPLAY}</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={MAPS_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-2 transition-colors hover:text-white md:justify-end"
+            >
+              <MapPin size={16} className="shrink-0" aria-hidden="true" />
+              <span>{ADDRESS}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

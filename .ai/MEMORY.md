@@ -25,3 +25,9 @@ Decision log + shipped-features index. Not a session recap.
 [2026-05-28][decision] Page gutters live in `lib/design-system/page-spacing.ts`, not `app/layout.tsx`. Left, right, and bottom padding share one value, 24px on mobile scaling to 60px on desktop.
 
 [2026-07-02][shipped] Insight Tutors: server-side API errors (api/enquiry.ts) email an alert to insighttutorstutoring@gmail.com via Resend, rate-limited to one per distinct error per 30 min (api/_lib/errorAlert.ts). Vercel Analytics added for visitor/referrer traffic (BaseLayout.astro) — view in Vercel dashboard, not email.
+
+[2026-09-07][shipped] Insight Tutors: one shared footer (sites/insight-tutors/src/components/Footer.astro) used by all six pages. Left column mirrors the floating nav links (Home, Our Story, Our Tutors, Subjects, Reviews, Pricing). Right column is a Contact Us block with email, mobile, and the Ivanhoe address linked to the Google Maps listing by CID. The footer markup used to be hand-copied into each page and had drifted apart.
+
+[2026-09-07][decision] Footer contact details live in the right-hand Contact Us column, so "Contact" is deliberately not repeated in the footer link list. The nav reaches the enquiry form through its "Book a free class" button instead. Rejected: adding a Google reviews link to the footer.
+
+[2026-09-07][lesson] Claude Code registers a skill only if its SKILL.md opens with YAML frontmatter containing name and description. Five skills in .ai/skills/ had none, so /finish-coding and the rest returned "unknown command". Two related traps: a skill also needs a symlink in .claude/skills/ (test was missing one), and Claude Code must be launched from the repo root, because a session started elsewhere never scans the project's .claude/ at all.
