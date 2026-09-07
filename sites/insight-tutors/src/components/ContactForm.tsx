@@ -28,6 +28,75 @@ const TUTOR_PREFERENCE_OPTIONS: { value: TutorPreference; label: string }[] = [
 ];
 
 const ENQUIRY_ENDPOINT = "/api/enquiry";
+const CONTACT_PHONE = "0426 719 991";
+const SERVER_ERROR_MESSAGE = `Something went wrong on our end and your enquiry didn't go through. Please call or text ${CONTACT_PHONE} and we'll sort it out.`;
+const NETWORK_ERROR_MESSAGE = `We couldn't reach the server. Check your connection and try again, or call or text ${CONTACT_PHONE}.`;
+const GENERIC_ERROR_MESSAGE = "Something went wrong. Please try again.";
+const SERVER_ERROR_STATUS = 500;
+
+type EnquiryResult = { ok: true } | { ok: false; message: string };
+
+/**
+ * Reports a submission failure so it is never silent.
+ * Swap the body for Sentry.captureException once the DSN is configured.
+ */
+function reportFormError(error: unknown, context: Record<string, unknown>): void {
+  console.error("[ContactForm] submission failed", { error, ...context });
+}
+
+/**
+ * Posts an enquiry and always resolves to a typed result, separating three failure
+ * modes the old bare `catch` collapsed into one: the request never left the browser,
+ * the server returned a crash page rather than JSON, or the API rejected the payload.
+ */
+async function postEnquiry(payload: Record<string, unknown>): Promise<EnquiryResult> {
+  let res: Response;
+  try {
+    res = await fetch(ENQUIRY_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch (error) {
+    reportFormError(error, { stage: "network", type: payload.type });
+    return { ok: false, message: NETWORK_ERROR_MESSAGE };
+  }
+
+  // Read as text first: a crashed function returns HTML, and res.json() would throw.
+  const raw = await res.text();
+  let data: { success?: boolean; message?: string } | null = null;
+  try {
+    data = JSON.parse(raw) as { success?: boolean; message?: string };
+  } catch {
+    data = null;
+  }
+
+  if (data === null) {
+    reportFormError(new Error(`Non-JSON response (HTTP ${res.status})`), {
+      stage: "parse",
+      status: res.status,
+      bodyPreview: raw.slice(0, 500),
+      type: payload.type,
+    });
+    return { ok: false, message: SERVER_ERROR_MESSAGE };
+  }
+
+  if (!res.ok || !data.success) {
+    // 4xx is the user's input being rejected — expected, shown to them, not an incident.
+    // 5xx is our problem, and is the case worth waking someone up for.
+    if (res.status >= SERVER_ERROR_STATUS) {
+      reportFormError(new Error(data.message ?? `HTTP ${res.status}`), {
+        stage: "server",
+        status: res.status,
+        type: payload.type,
+      });
+      return { ok: false, message: data.message ?? SERVER_ERROR_MESSAGE };
+    }
+    return { ok: false, message: data.message ?? GENERIC_ERROR_MESSAGE };
+  }
+
+  return { ok: true };
+}
 
 const CTA_BUTTON =
   "insight-cta-coral mt-2 w-full rounded-full px-6 py-3.5 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40";
@@ -134,16 +203,13 @@ export default function ContactForm({ hideHeading = false }: ContactFormProps) {
     setStep1Error("");
     setIsSubmitting(true);
     setSubmitError("");
-    try {
-      const res = await fetch(ENQUIRY_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "partial", name, student_name: studentName, mobile, email }),
-      });
-      const data = await res.json() as { success: boolean; message?: string };
-      if (data.success) { setFormStep("q2"); } else { setSubmitError(data.message ?? "Something went wrong. Please try again."); }
-    } catch { setSubmitError("Something went wrong. Please try again."); }
-    finally { setIsSubmitting(false); }
+
+    const result = await postEnquiry({
+      type: "partial", name, student_name: studentName, mobile, email,
+    });
+
+    if (result.ok) { setFormStep("q2"); } else { setSubmitError(result.message); }
+    setIsSubmitting(false);
   };
 
   const handleSubmit = async () => {
@@ -153,24 +219,19 @@ export default function ContactForm({ hideHeading = false }: ContactFormProps) {
     }
     setIsSubmitting(true);
     setSubmitError("");
-    try {
-      const res = await fetch(ENQUIRY_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "complete",
-          name, student_name: studentName, mobile, email,
-          grade,
-          subjects: selectedSubjects.size > 0 ? Array.from(selectedSubjects).join(", ") : "Not provided",
-          tutor_preference: tutorPreference ?? "No preference",
-          availability: selectedSlots.size > 0 ? Array.from(selectedSlots).join(", ") : "Not provided",
-          referral_source: referralSource === "Other" ? `Other: ${referralOther}` : referralSource || "Not provided",
-        }),
-      });
-      const data = await res.json() as { success: boolean; message?: string };
-      if (data.success) { setFormStep("done"); } else { setSubmitError(data.message ?? "Something went wrong. Please try again."); }
-    } catch { setSubmitError("Something went wrong. Please try again."); }
-    finally { setIsSubmitting(false); }
+
+    const result = await postEnquiry({
+      type: "complete",
+      name, student_name: studentName, mobile, email,
+      grade,
+      subjects: selectedSubjects.size > 0 ? Array.from(selectedSubjects).join(", ") : "Not provided",
+      tutor_preference: tutorPreference ?? "No preference",
+      availability: selectedSlots.size > 0 ? Array.from(selectedSlots).join(", ") : "Not provided",
+      referral_source: referralSource === "Other" ? `Other: ${referralOther}` : referralSource || "Not provided",
+    });
+
+    if (result.ok) { setFormStep("done"); } else { setSubmitError(result.message); }
+    setIsSubmitting(false);
   };
 
   return (
