@@ -1,3 +1,8 @@
+---
+name: start-chat
+description: "Start-of-chat routine, run automatically on the first message of every new chat: state which instruction files loaded, ask the intention (Build, Fix, Question, Other), read .ai/MEMORY.md, check for active plans, then route the work. Use at the beginning of a new conversation or when the user invokes /start-chat."
+---
+
 # /start-chat
 
 Run at the start of every new chat. The agent follows this on the first message — the user does not need to type `/start-chat`.

@@ -1,3 +1,8 @@
+---
+name: setup-new-project
+description: "First-time setup walkthrough for a fresh repo: scaffold the .ai/ directory, CLAUDE.md, MEMORY.md and BUILD_JOURNAL, and wire the .claude/ and .cursor/ symlinks. Use when starting a new project or when the user invokes /setup-new-project."
+---
+
 # /setup-new-project
 
 Run this **once**, when scaffolding a brand new project from this `.ai/` structure (e.g. you copied this folder into a fresh repo).

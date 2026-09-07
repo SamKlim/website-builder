@@ -1,3 +1,8 @@
+---
+name: brainstorm
+description: "Structured brainstorm before building any new feature, component, page, or behaviour change. Asks one question at a time, designs in sections, and stays read-only until a plan reaches Status: approved. Automatic on Build intention, or when the user invokes /brainstorm."
+---
+
 # /brainstorm
 
 Use this skill before building any new feature, component, page, or behaviour change.

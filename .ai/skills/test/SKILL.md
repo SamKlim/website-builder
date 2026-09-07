@@ -1,3 +1,8 @@
+---
+name: test
+description: "Full test pipeline: post the test plan in chat for approval, write or update unit, Storybook and Playwright tests, run them, self-heal failures, and summarise results. Use when the user invokes /test or when finish-coding reaches its tests step."
+---
+
 # /test
 
 Run the full testing pipeline for everything new or changed in this chat.

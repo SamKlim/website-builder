@@ -1,3 +1,8 @@
+---
+name: finish-coding
+description: "End-of-chat checklist for when coding is finished: code review of all changed files, npx knip dead-code scan, compile/build check, tests, MEMORY.md, BUILD_JOURNAL, then commit and push with approval. Use when the user says they are done, finished coding, or invokes /finish-coding."
+---
+
 # /finish-coding
 
 Run this when you finish coding in a chat (before you close the thread or start unrelated work in a new one).
